@@ -175,6 +175,7 @@ module "service" {
 | enable_monitoring | If true monitoring alerts will be created if needed. | string | `true` | no |
 | monitoring_sns_topic_arn | ARN for the SNS topic to send alerts to. This is required when monitoring is enabled (by default) | string | `` | no |
 | ecs_cluster_name | The name of the ECS cluster where this service will be launched. This is required when monitoring is enabled (by default) | string | `` | no |
+
 ## Outputs
 
 | Name | Description |
@@ -182,3 +183,21 @@ module "service" {
 | alb_dns_name | DNS address of the load balancer, if created. |
 | alb_route53_dns_name | Route 53 DNS name, if created. |
 | aws_alb_target_group_arn | ARN of the loadbalancer target group. |
+
+## Philips Forest
+
+This module is part of the Philips Forest.
+
+```
+                                                     ___                   _
+                                                    / __\__  _ __ ___  ___| |_
+                                                   / _\/ _ \| '__/ _ \/ __| __|
+                                                  / / | (_) | | |  __/\__ \ |_
+                                                  \/   \___/|_|  \___||___/\__|  
+
+                                                                 Infrastructure
+```
+
+Talk to the forestkeepers in the `forest`-channel on Slack.
+
+[![Slack](https://philips-software-slackin.now.sh/badge.svg)](https://philips-software-slackin.now.sh)

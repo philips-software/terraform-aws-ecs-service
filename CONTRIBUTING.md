@@ -6,13 +6,13 @@ We'd love for you to contribute to our source code and to make the Forest even b
  - [Issues and Bugs](#issue)
  - [Feature Requests](#feature)
  - [Submission Guidelines](#submit)
- - [Coding Rules](#rules)
- - [Commit Message Guidelines](#commit)
  - [Further Info](#info)
 
 ## <a name="question"></a> Got a Question or Problem?
 
 If you have questions about how to use the Forest, please direct these to the [Slack group / philips-software][slack].
+
+[![Slack](https://philips-software-slackin.now.sh/badge.svg)](https://philips-software-slackin.now.sh)
 
 ## <a name="issue"></a> Found an Issue?
 
@@ -124,6 +124,14 @@ from the main (upstream) repository:
     ```shell
     git pull --ff upstream master
     ```
+
+## <a name="info"></a> Info
+
+For more info, please reach out to the team on [Slack group / philips-software][slack] in the #forest channel.
+
+Use the badge to sign-up.
+
+[![Slack](https://philips-software-slackin.now.sh/badge.svg)](https://philips-software-slackin.now.sh)
 
 [contribute]: CONTRIBUTING.md
 [github]: https://github.com/philips-software/terraform-aws-ecs-service/issues 

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+- Slack badge in documentation
 - Add default lifecycle for targetgroups
 - Add default monitoring capabilities for ECS Services (default enabled)
 - Add Health Check Grace Period for services that need more time to start
@@ -16,4 +17,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Refactor outputs to support terraform 0.11
 - Add support to mount volumes
 
-[Unreleased]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.4.0...HEAD
+[Unreleased]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.0.0...HEAD
