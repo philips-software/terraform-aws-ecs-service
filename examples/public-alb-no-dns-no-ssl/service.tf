@@ -1,5 +1,5 @@
 module "service" {
-  source = "../"
+  source = "../../"
 
   environment = "${var.environment}"
   project     = "${var.project}"
