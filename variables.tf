@@ -190,3 +190,9 @@ variable "ecs_cluster_name" {
   type        = "string"
   description = "The name of the ECS cluster where this service will be launched."
 }
+
+variable "tags" {
+  type        = "map"
+  description = "A map of tags to add to the resources"
+  default     = {}
+}
