@@ -16,8 +16,11 @@ resource "aws_sns_topic" "monitoring" {
 }
 
 module "service" {
-  source = "github.com/philips-software/terraform-aws-ecs-service"
+  source = "philips-software/ecs-service/aws"
   version = "1.0.0"
+
+  # Or via github
+  # source = "github.com/philips-software/terraform-aws-ecs-service?ref=1.0.0"
 
   environment = "${var.environment}"
   aws_region = "${var.aws_region}"
@@ -80,15 +83,18 @@ module "service" {
 ```
 
 module "service" {
-  source = "github.com/philips-software/terraform-aws-ecs-service"
+  source = "philips-software/ecs-service/aws"
   version = "1.0.0"
+
+  # Or via github
+  # source = "github.com/philips-software/terraform-aws-ecs-service?ref=1.0.0"
 
   environment = "${var.environment}"
   aws_region = "${var.aws_region}"
 
   ecs_cluster_id   = "${module.ecs-cluster.ecs_cluster_id}"
   ecs_cluster_name = "${module.ecs_cluster.name}"
-  
+
   docker_image = "npalm/docker-introduction"
   service_name = "test"
 
@@ -174,7 +180,7 @@ module "service" {
 | vpc_id | The VPC to launch the ALB in in (e.g. vpc-66ecaa02). | string | `` | no |
 | enable_monitoring | If true monitoring alerts will be created if needed. | string | `true` | no |
 | monitoring_sns_topic_arn | ARN for the SNS topic to send alerts to. This is required when monitoring is enabled (by default) | string | `` | no |
-| ecs_cluster_name | The name of the ECS cluster where this service will be launched. This is required when monitoring is enabled (by default) | string | `` | no |
+| ecs_cluster_name | The name of the ECS cluster where this service will be launched. This is required when monitoring is enabled (by default) | string | | yes |
 
 ## Outputs
 

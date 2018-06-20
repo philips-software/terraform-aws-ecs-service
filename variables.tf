@@ -189,5 +189,4 @@ variable "monitoring_sns_topic_arn" {
 variable "ecs_cluster_name" {
   type        = "string"
   description = "The name of the ECS cluster where this service will be launched."
-  default     = ""
 }
