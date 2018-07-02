@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 1.0.1 - 2018-07-02
+https://github.com/philips-software/terraform-aws-ecs-service/tags/1.0.1
+- Add example
+
 ## 1.0.0 - 2018-07-02
 https://github.com/philips-software/terraform-aws-ecs-service/tags/1.0.0
 - Slack badge in documentation
@@ -19,4 +23,5 @@ https://github.com/philips-software/terraform-aws-ecs-service/tags/1.0.0
 - Refactor outputs to support terraform 0.11
 - Add support to mount volumes
 
-[Unreleased]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.0.1...HEAD
+[1.0.1]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.0.0...1.0.1
