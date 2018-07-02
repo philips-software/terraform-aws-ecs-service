@@ -25,12 +25,11 @@ resource "aws_security_group" "security_group_alb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
-    Name        = "${var.environment}-${var.service_name}"
-    Environment = "${var.environment}"
-    Application = "${var.service_name}"
-    Role        = "security group"
-  }
+  tags = "${merge(map("Name", format("%s", "${var.environment}-${var.service_name}")),
+            map("Environment", format("%s", var.environment)),
+            map("Project", format("%s", var.project)),
+            map("Application", format("%s", var.service_name)),
+            var.tags)}"
 
   lifecycle {
     create_before_destroy = true
@@ -47,13 +46,11 @@ resource "aws_alb" "alb" {
 
   enable_deletion_protection = false
 
-  tags {
-    Name        = "${var.environment}-${var.service_name}"
-    Environment = "${var.environment}"
-    Application = "${var.service_name}"
-    Role        = "load balancer"
-    Project     = "${var.project}"
-  }
+  tags = "${merge(map("Name", format("%s", "${var.environment}-${var.service_name}")),
+            map("Environment", format("%s", var.environment)),
+            map("Project", format("%s", var.project)),
+            map("Application", format("%s", var.service_name)),
+            var.tags)}"
 }
 
 resource "aws_alb_target_group" "target_group" {
@@ -75,12 +72,11 @@ resource "aws_alb_target_group" "target_group" {
     create_before_destroy = true
   }
 
-  tags {
-    Name        = "${var.environment}-${var.service_name}"
-    Environment = "${var.environment}"
-    Application = "${var.service_name}"
-    Project     = "${var.project}"
-  }
+  tags = "${merge(map("Name", format("%s", "${var.environment}-${var.service_name}")),
+            map("Environment", format("%s", var.environment)),
+            map("Project", format("%s", var.project)),
+            map("Application", format("%s", var.service_name)),
+            var.tags)}"
 }
 
 resource "aws_alb_listener" "listener" {

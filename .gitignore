@@ -1,6 +1,5 @@
-# Compiled files
-*.tfstate
-*.tfstate.backup
+# state
+*.tfstate*
 
 # Module directory
 .terraform/
@@ -8,8 +7,9 @@
 # keys
 *id_rsa*
 
+# other
 .idea
-
 .DS_Store
-
-*envrc
+*.out
+example/*.secrets*.tfvars
+.envrc
