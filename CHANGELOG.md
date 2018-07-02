@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 1.0.0 - 2018-07-02
+https://github.com/philips-software/terraform-aws-ecs-service/tags/1.0.0
 - Slack badge in documentation
 - Add default lifecycle for targetgroups
 - Add default monitoring capabilities for ECS Services (default enabled)
