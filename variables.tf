@@ -189,5 +189,10 @@ variable "monitoring_sns_topic_arn" {
 variable "ecs_cluster_name" {
   type        = "string"
   description = "The name of the ECS cluster where this service will be launched."
-  default     = ""
+}
+
+variable "tags" {
+  type        = "map"
+  description = "A map of tags to add to the resources"
+  default     = {}
 }
