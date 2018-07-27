@@ -90,6 +90,11 @@ variable "alb_certificate_arn" {
   default     = ""
 }
 
+variable "alb_timeout" {
+  description = "The idle timeout in seconds of the ALB"
+  default     = 60
+}
+
 variable "health_check_matcher" {
   description = "HTTP result code used for health validation."
   default     = "200-399"

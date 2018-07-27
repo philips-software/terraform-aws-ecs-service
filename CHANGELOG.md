@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+- Make the idle timeout of the ALB configurable
 
 ## 1.0.1 - 2018-07-02
 https://github.com/philips-software/terraform-aws-ecs-service/tags/1.0.1
