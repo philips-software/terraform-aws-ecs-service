@@ -36,9 +36,33 @@ resource "aws_security_group" "security_group_alb" {
   }
 }
 
+locals {
+  enable_alb = "${var.enable_alb * (var.alb_load_balancer_type == "application" ? 1 : 0)}"
+  enable_nlb = "${var.enable_alb * (var.alb_load_balancer_type == "network"? 1 : 0)}"
+}
+
+resource "aws_alb" "nlb" {
+  // Only enable if ALB is required
+  count = "${local.enable_nlb ? 1 : 0}"
+
+  internal        = "${var.internal_alb}"
+  subnets         = ["${split(",", var.subnet_ids)}"]
+  load_balancer_type = "network"
+
+  idle_timeout = "${var.alb_timeout}"
+
+  enable_deletion_protection = false
+
+  tags = "${merge(map("Name", format("%s", "${var.environment}-${var.service_name}")),
+            map("Environment", format("%s", var.environment)),
+            map("Project", format("%s", var.project)),
+            map("Application", format("%s", var.service_name)),
+            var.tags)}"
+}
+
 resource "aws_alb" "alb" {
   // Only enable if ALB is required
-  count = "${var.enable_alb ? 1 : 0}"
+  count = "${local.enable_alb ? 1 : 0}"
 
   internal        = "${var.internal_alb}"
   security_groups = ["${aws_security_group.security_group_alb.id}"]
@@ -55,12 +79,20 @@ resource "aws_alb" "alb" {
             var.tags)}"
 }
 
+locals {
+  alb_arn = "${join("",compact(concat(aws_alb.alb.*.arn, aws_alb.nlb.*.arn)))}"
+  alb_dns_name = "${join("",compact(concat(aws_alb.alb.*.dns_name, aws_alb.nlb.*.dns_name)))}"
+  alb_zone_id = "${join("",compact(concat(aws_alb.alb.*.zone_id, aws_alb.nlb.*.zone_id)))}"
+  alb_arn_suffix = "${join("",compact(concat(aws_alb.alb.*.arn_suffix, aws_alb.nlb.*.arn_suffix)))}"
+}
+
+
 resource "aws_alb_target_group" "target_group" {
   // Only enable if ALB is required
   count = "${var.enable_alb ? 1 : 0}"
 
   port     = "${var.alb_port}"
-  protocol = "${var.container_ssl_enabled ? "HTTPS" : "HTTP"}"
+  protocol = "${local.enable_nlb ? "TCP" : (var.container_ssl_enabled ? "HTTPS" : "HTTP")}"
   vpc_id   = "${var.vpc_id}"
 
   health_check {
@@ -74,6 +106,12 @@ resource "aws_alb_target_group" "target_group" {
     create_before_destroy = true
   }
 
+  stickiness {
+    enabled = "${local.enable_alb}"
+    type    = "lb_cookie"
+    cookie_duration = "86400"
+  }
+
   tags = "${merge(map("Name", format("%s", "${var.environment}-${var.service_name}")),
             map("Environment", format("%s", var.environment)),
             map("Project", format("%s", var.project)),
@@ -85,7 +123,7 @@ resource "aws_alb_listener" "listener" {
   // Only enable if ALB is required
   count = "${var.enable_alb ? 1 : 0}"
 
-  load_balancer_arn = "${aws_alb.alb.arn}"
+  load_balancer_arn = "${local.alb_arn}"
   protocol          = "${var.alb_protocol}"
   port              = "${var.alb_port}"
   certificate_arn   = "${var.alb_certificate_arn}"
@@ -107,8 +145,8 @@ resource "aws_route53_record" "dns_record" {
   type    = "A"
 
   alias {
-    name                   = "${aws_alb.alb.dns_name}"
-    zone_id                = "${aws_alb.alb.zone_id}"
+    name                   = "${local.alb_dns_name}"
+    zone_id                = "${local.alb_zone_id}"
     evaluate_target_health = true
   }
 }
