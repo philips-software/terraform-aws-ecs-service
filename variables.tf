@@ -84,6 +84,11 @@ variable "alb_port" {
   default     = 443
 }
 
+variable "alb_load_balancer_type" {
+  description = "Load balancer type"
+  default     = "application"
+}
+
 variable "alb_certificate_arn" {
   description = "The AWS certificate ARN, required for an ALB via HTTPS. The certificate should be available in the same zone."
   type        = "string"
