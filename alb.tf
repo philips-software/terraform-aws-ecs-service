@@ -42,7 +42,7 @@ locals {
 }
 
 resource "aws_alb" "nlb" {
-  // Only enable 'network' load balancer is enabled
+  // Only enable if 'network' load balancer is enabled
   count = "${local.enable_nlb ? 1 : 0}"
 
   internal        = "${var.internal_alb}"
