@@ -85,7 +85,7 @@ variable "alb_port" {
 }
 
 variable "alb_load_balancer_type" {
-  description = "Load balancer type"
+  description = "Load balancer type: network, application"
   default     = "application"
 }
 
