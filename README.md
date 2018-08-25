@@ -148,6 +148,7 @@ module "service" {
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | alb_certificate_arn | The AWS certificate ARN, required for an ALB via HTTPS. The certificate should be available in the same zone. | string | `` | no |
+| alb_load_balancer_type | Type of load balancer (network or appplication) | string | `application` | no |
 | alb_port | Defines to port for the ALB. | string | `443` | no |
 | alb_protocol | Defines the ALB protocol to be used. | string | `HTTPS` | no |
 | alb_timeout | The idle timeout in seconds of the ALB | string | `60` | no |
