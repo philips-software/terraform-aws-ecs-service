@@ -185,7 +185,7 @@ resource "aws_cloudwatch_metric_alarm" "alb_healthy_hostcount_high" {
   insufficient_data_actions = ["${var.monitoring_sns_topic_arn}"]
 
   dimensions {
-    LoadBalancer = "${aws_alb.alb.arn_suffix}"
+    LoadBalancer = "${local.lb_arn_suffix}"
     TargetGroup  = "${aws_alb_target_group.target_group.arn_suffix}"
   }
 
@@ -215,7 +215,7 @@ resource "aws_cloudwatch_metric_alarm" "alb_healthy_hostcount_low" {
   insufficient_data_actions = ["${var.monitoring_sns_topic_arn}"]
 
   dimensions {
-    LoadBalancer = "${aws_alb.alb.arn_suffix}"
+    LoadBalancer = "${local.lb_arn_suffix}"
     TargetGroup  = "${aws_alb_target_group.target_group.arn_suffix}"
   }
 

@@ -1,6 +1,11 @@
+output "alb_arn" {
+  description = "Load Balancer ARN."
+  value       = "${local.lb_arn}"
+}
+
 output "alb_dns_name" {
   description = "DNS address of the load balancer, if created."
-  value       = "${element(concat(aws_alb.alb.*.dns_name, list("")), 0)}"
+  value       = "${local.lb_dns_name}"
 }
 
 output "aws_alb_target_group_arn" {
