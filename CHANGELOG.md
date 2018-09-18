@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 - Make the idle timeout of the ALB configurable
+- Added task_role_arn so a task can be secured using a role to restrict access to specific resources
 
 ## 1.0.1 - 2018-07-02
 https://github.com/philips-software/terraform-aws-ecs-service/tags/1.0.1
