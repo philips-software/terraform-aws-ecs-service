@@ -25,6 +25,7 @@ resource "aws_ecs_task_definition" "task" {
   family                = "${var.environment}-${var.service_name}"
   volume                = "${var.volumes}"
   container_definitions = "${data.template_file.docker-template.rendered}"
+  task_role_arn         = "${var.task_role_arn}"
 }
 
 resource "aws_ecs_service" "service_alb" {

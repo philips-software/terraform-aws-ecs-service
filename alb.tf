@@ -44,6 +44,8 @@ resource "aws_alb" "alb" {
   security_groups = ["${aws_security_group.security_group_alb.id}"]
   subnets         = ["${split(",", var.subnet_ids)}"]
 
+  idle_timeout = "${var.alb_timeout}"
+
   enable_deletion_protection = false
 
   tags = "${merge(map("Name", format("%s", "${var.environment}-${var.service_name}")),

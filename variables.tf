@@ -65,6 +65,12 @@ variable "desired_count" {
   description = "The number of desired tasks"
 }
 
+variable "task_role_arn" {
+  type        = "string"
+  default     = ""
+  description = "The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services."
+}
+
 // ------
 // ALB specific variables
 // ------
@@ -88,6 +94,11 @@ variable "alb_certificate_arn" {
   description = "The AWS certificate ARN, required for an ALB via HTTPS. The certificate should be available in the same zone."
   type        = "string"
   default     = ""
+}
+
+variable "alb_timeout" {
+  description = "The idle timeout in seconds of the ALB"
+  default     = 60
 }
 
 variable "health_check_matcher" {

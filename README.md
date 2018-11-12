@@ -145,42 +145,46 @@ module "service" {
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| alb_certificate_arn | The AWS certificate ARN, required for an ALB via HTTPS. The certificate should be available in the same zone. | string | `` | no |
-| alb_port | Defines to port for the ALB. | string | `443` | no |
-| alb_protocol | Defines the ALB protocol to be used. | string | `HTTPS` | no |
-| container_cpu | CPU shares to be assigned to the container. | string | `` | no |
-| container_memory | Memory to be assigned to the container. | string | `400` | no |
-| container_port | The container port to be exported to the host. | string | - | yes |
-| container_ssl_enabled | Set to true if container has SSL enabled. This requires that the container can handle HTTPS traffic. | string | `false` | no |
-| desired_count | The number of desired tasks | string | `1` | no |
-| dns_name | The name DNS name. | string | `` | no |
-| dns_zone_id | The ID of the DNS zone. | string | `` | no |
-| docker_environment_vars | A JSON formated array of tuples of docker enviroment variables. | string | `` | no |
-| docker_image | Name of te docker image. | string | - | yes |
-| docker_image_tag | The docker image version (e.g. 1.0.0 or latest). | string | `latest` | no |
-| docker_logging_config | The configuration for docker container logging | string | `` | no |
-| docker_mount_points | Defines the the mount point for the container. | string | `` | no |
-| docker_repository | The location of the docker repository (e.g. 1234566789.dkr.ecr.eu-west-1.amazonaws.com). | string | `docker.io` | no |
-| ecs_cluster_id | The id of the ECS cluster where this service will be launched. | string | - | yes |
-| ecs_service_role | ECS service role. | string | `` | no |
-| enable_alb | If true an ALB is created. | string | `false` | no |
-| enable_dns | Enable creation of DNS record. | string | `true` | no |
-| environment | Name of the environment (e.g. project-dev); will be prefixed to all resources. | string | - | yes |
-| health_check_grace_period_seconds | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 1800. Only valid for services configured to use load balancers. | string | `0` | no |
-| health_check_interval | The approximate amount of time, in seconds, between health checks of an individual target. Minimum value 5 seconds, Maximum value 300 seconds. Default 30 seconds. | string | `30` | no |
-| health_check_matcher | HTTP result code used for health validation. | string | `200-399` | no |
-| health_check_path | The url path part for the health check endpoint. | string | `/` | no |
-| internal_alb | If true this ALB is only available within the VPC, default (false) is publicly accessable (internetfacing). | string | `false` | no |
-| project | Project cost center / cost allocation. | string | - | yes |
-| service_name | Name of the service to be created. | string | - | yes |
-| subnet_ids | Comma separated list with subnet itd. | string | `` | no |
-| volumes | Defines the volumes that can be mounted to a container. | list | `<list>` | no |
-| vpc_id | The VPC to launch the ALB in in (e.g. vpc-66ecaa02). | string | `` | no |
-| enable_monitoring | If true monitoring alerts will be created if needed. | string | `true` | no |
-| monitoring_sns_topic_arn | ARN for the SNS topic to send alerts to. This is required when monitoring is enabled (by default) | string | `` | no |
-| ecs_cluster_name | The name of the ECS cluster where this service will be launched. This is required when monitoring is enabled (by default) | string | | yes |
+| Name                              | Description                                                                                                                                                                            | Type   | Default     | Required |
+|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------:|:-----------:|:--------:|
+| alb_certificate_arn               | The AWS certificate ARN, required for an ALB via HTTPS. The certificate should be available in the same zone.                                                                          | string | ``          | no       |
+| alb_port                          | Defines to port for the ALB.                                                                                                                                                           | string | `443`       | no       |
+| alb_protocol                      | Defines the ALB protocol to be used.                                                                                                                                                   | string | `HTTPS`     | no       |
+| alb_timeout                       | The idle timeout in seconds of the ALB                                                                                                                                                 | string | `60`        | no       |
+| container_cpu                     | CPU shares to be assigned to the container.                                                                                                                                            | string | ``          | no       |
+| container_memory                  | Memory to be assigned to the container.                                                                                                                                                | string | `400`       | no       |
+| container_port                    | The container port to be exported to the host.                                                                                                                                         | string | -           | yes      |
+| container_ssl_enabled             | Set to true if container has SSL enabled. This requires that the container can handle HTTPS traffic.                                                                                   | string | `false`     | no       |
+| desired_count                     | The number of desired tasks                                                                                                                                                            | string | `1`         | no       |
+| dns_name                          | The name DNS name.                                                                                                                                                                     | string | ``          | no       |
+| dns_zone_id                       | The ID of the DNS zone.                                                                                                                                                                | string | ``          | no       |
+| docker_environment_vars           | A JSON formated array of tuples of docker enviroment variables.                                                                                                                        | string | ``          | no       |
+| docker_image                      | Name of te docker image.                                                                                                                                                               | string | -           | yes      |
+| docker_image_tag                  | The docker image version (e.g. 1.0.0 or latest).                                                                                                                                       | string | `latest`    | no       |
+| docker_logging_config             | The configuration for docker container logging                                                                                                                                         | string | ``          | no       |
+| docker_mount_points               | Defines the the mount point for the container.                                                                                                                                         | string | ``          | no       |
+| docker_repository                 | The location of the docker repository (e.g. 123456789.dkr.ecr.eu-west-1.amazonaws.com).                                                                                                | string | `docker.io` | no       |
+| ecs_cluster_id                    | The id of the ECS cluster where this service will be launched.                                                                                                                         | string | -           | yes      |
+| ecs_cluster_name                  | The name of the ECS cluster where this service will be launched.                                                                                                                       | string | -           | yes      |
+| ecs_service_role                  | ECS service role.                                                                                                                                                                      | string | ``          | no       |
+| enable_alb                        | If true an ALB is created.                                                                                                                                                             | string | `false`     | no       |
+| enable_dns                        | Enable creation of DNS record.                                                                                                                                                         | string | `true`      | no       |
+| enable_monitoring                 | If true monitoring alerts will be created if needed.                                                                                                                                   | string | `true`      | no       |
+| environment                       | Name of the environment (e.g. project-dev); will be prefixed to all resources.                                                                                                         | string | -           | yes      |
+| health_check_grace_period_seconds | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 1800. Only valid for services configured to use load balancers. | string | `0`         | no       |
+| health_check_interval             | The approximate amount of time, in seconds, between health checks of an individual target. Minimum value 5 seconds, Maximum value 300 seconds. Default 30 seconds.                     | string | `30`        | no       |
+| health_check_matcher              | HTTP result code used for health validation.                                                                                                                                           | string | `200-399`   | no       |
+| health_check_path                 | The url path part for the health check endpoint.                                                                                                                                       | string | `/`         | no       |
+| internal_alb                      | If true this ALB is only available within the VPC, default (false) is publicly accessable (internetfacing).                                                                            | string | `false`     | no       |
+| monitoring_sns_topic_arn          | ARN for the SNS topic to send alerts to.                                                                                                                                               | string | ``          | no       |
+| project                           | Project cost center / cost allocation.                                                                                                                                                 | string | -           | yes      |
+| service_name                      | Name of the service to be created.                                                                                                                                                     | string | -           | yes      |
+| subnet_ids                        | Comma separated list with subnet itd.                                                                                                                                                  | string | ``          | no       |
+| tags                              | A map of tags to add to the resources                                                                                                                                                  | map    | `<map>`     | no       |
+| task_role_arn                     | The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services.                                                                                    | string | ``          | no       |
+| volumes                           | Defines the volumes that can be mounted to a container.                                                                                                                                | list   | `<list>`    | no       |
+| vpc_id                            | The VPC to launch the ALB in in (e.g. vpc-66ecaa02).                                                                                                                                   | string | ``          | no       |
+
 
 ## Outputs
 
