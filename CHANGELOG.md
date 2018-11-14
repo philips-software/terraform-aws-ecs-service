@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
-- Added: SSL policy is configurable
+- Changed: SSL policy is configurable, default upgraded to: ELBSecurityPolicy-TLS-1-2-2017-01. To keep the old policy in place set the variable `ssl_policy` to: `ELBSecurityPolicy-2015-05 `
 - Changed: Removed egres from alb ecurity group, limit port to alb port only.
 
 ## 1.1.0 - 2018-12-12

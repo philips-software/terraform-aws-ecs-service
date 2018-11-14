@@ -211,5 +211,5 @@ variable "tags" {
 variable "ssl_policy" {
   type        = "string"
   description = "SSL policy applied to an SSL enabled ALB, see https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html"
-  default     = "ELBSecurityPolicy-2015-05"
+  default     = "ELBSecurityPolicy-TLS-1-2-2017-01"
 }
