@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+- Added: SSL policy is configurable
+- Changed: Removed egres from alb ecurity group, limit port to alb port only.
 
 ## 1.1.0 - 2018-12-12
 - Make the idle timeout of the ALB configurable
