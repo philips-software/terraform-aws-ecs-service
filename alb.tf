@@ -11,18 +11,10 @@ resource "aws_security_group" "security_group_alb" {
 
   # allow all incoming traffic
   ingress = {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = "${var.alb_port}"
+    to_port     = "${var.alb_port}"
+    protocol    = "tcp"
     cidr_blocks = ["${var.internal_alb ? data.aws_vpc.selected.cidr_block : "0.0.0.0/0"}"]
-  }
-
-  # allow all outgoing traffic
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = "${merge(map("Name", format("%s", "${var.environment}-${var.service_name}")),
@@ -89,7 +81,7 @@ resource "aws_alb_listener" "listener" {
   protocol          = "${var.alb_protocol}"
   port              = "${var.alb_port}"
   certificate_arn   = "${var.alb_certificate_arn}"
-  ssl_policy        = "${var.alb_protocol == "HTTPS" ? "ELBSecurityPolicy-2015-05": ""}"
+  ssl_policy        = "${var.alb_protocol == "HTTPS" ? "${var.ssl_policy}": ""}"
 
   default_action {
     target_group_arn = "${aws_alb_target_group.target_group.arn}"

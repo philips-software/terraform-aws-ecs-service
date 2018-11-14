@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+- Changed: SSL policy is configurable, default upgraded to: ELBSecurityPolicy-TLS-1-2-2017-01. To keep the old policy in place set the variable `ssl_policy` to: `ELBSecurityPolicy-2015-05 `
+- Changed: Removed egres from alb ecurity group, limit port to alb port only.
+
+## 1.1.0 - 2018-12-12
 - Make the idle timeout of the ALB configurable
 - Added task_role_arn so a task can be secured using a role to restrict access to specific resources
 
@@ -25,5 +29,6 @@ https://github.com/philips-software/terraform-aws-ecs-service/tags/1.0.0
 - Refactor outputs to support terraform 0.11
 - Add support to mount volumes
 
-[Unreleased]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.0.1...HEAD
+[Unreleased]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.0.0...1.0.1
