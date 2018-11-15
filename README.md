@@ -142,7 +142,6 @@ module "service" {
 
 ```
 
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -179,7 +178,7 @@ module "service" {
 | monitoring_sns_topic_arn | ARN for the SNS topic to send alerts to. | string | `` | no |
 | project | Project cost center / cost allocation. | string | - | yes |
 | service_name | Name of the service to be created. | string | - | yes |
-| ssl_policy | SSL policy applied to an SSL enabled ALB, see https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html | string | `ELBSecurityPolicy-2015-05` | no |
+| ssl_policy | SSL policy applied to an SSL enabled ALB, see https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html | string | `ELBSecurityPolicy-TLS-1-2-2017-01` | no |
 | subnet_ids | Comma separated list with subnet itd. | string | `` | no |
 | tags | A map of tags to add to the resources | map | `<map>` | no |
 | task_role_arn | The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services. | string | `` | no |
