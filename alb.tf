@@ -17,6 +17,14 @@ resource "aws_security_group" "security_group_alb" {
     cidr_blocks = ["${var.internal_alb ? data.aws_vpc.selected.cidr_block : "0.0.0.0/0"}"]
   }
 
+  # allow all outgoing traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["${data.aws_vpc.selected.cidr_block}"]
+  }
+
   tags = "${merge(map("Name", format("%s", "${var.environment}-${var.service_name}")),
             map("Environment", format("%s", var.environment)),
             map("Project", format("%s", var.project)),
