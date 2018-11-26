@@ -18,6 +18,7 @@ data "template_file" "docker-template" {
     environment_vars  = "${var.docker_environment_vars}"
     logging_config    = "${var.docker_logging_config == "" ? "" : ",${var.docker_logging_config}"}"
     mount_points      = "${var.docker_mount_points == "" ? "" : ",${var.docker_mount_points}"}"
+    extra_properties  = "${length(var.docker_entrypoint) == 0 ? "" : ",\"entryPoint\": ${jsonencode(var.docker_entrypoint)}"}"
   }
 }
 

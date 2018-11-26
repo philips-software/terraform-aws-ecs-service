@@ -157,6 +157,7 @@ module "service" {
 | desired_count | The number of desired tasks | string | `1` | no |
 | dns_name | The name DNS name. | string | `` | no |
 | dns_zone_id | The ID of the DNS zone. | string | `` | no |
+| docker_entrypoint | The entrypoint that should be used for the docker container. | list | `<list>` | no |
 | docker_environment_vars | A JSON formated array of tuples of docker enviroment variables. | string | `` | no |
 | docker_image | Name of te docker image. | string | - | yes |
 | docker_image_tag | The docker image version (e.g. 1.0.0 or latest). | string | `latest` | no |

@@ -13,5 +13,6 @@
     ]
     ${logging_config}
     ${mount_points}
+    ${extra_properties}
   }
 ]

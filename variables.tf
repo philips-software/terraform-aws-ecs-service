@@ -19,6 +19,12 @@ variable "docker_repository" {
   description = "The location of the docker repository (e.g. 123456789.dkr.ecr.eu-west-1.amazonaws.com)."
 }
 
+variable "docker_entrypoint" {
+  type        = "list"
+  default     = []
+  description = "The entrypoint that should be used for the docker container."
+}
+
 variable "docker_image_tag" {
   type        = "string"
   default     = "latest"
