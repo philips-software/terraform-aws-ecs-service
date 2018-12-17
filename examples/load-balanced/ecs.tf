@@ -50,8 +50,8 @@ module "ecs_cluster" {
   vpc_cidr = "${module.vpc.vpc_cidr}"
 
   min_instance_count     = "1"
-  max_instance_count     = "1"
-  desired_instance_count = "1"
+  max_instance_count     = "2"
+  desired_instance_count = "2"
 
   instance_type = "t2.micro"
 

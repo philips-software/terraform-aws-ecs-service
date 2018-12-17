@@ -166,21 +166,28 @@ module "service" {
 | ecs_cluster_id | The id of the ECS cluster where this service will be launched. | string | - | yes |
 | ecs_cluster_name | The name of the ECS cluster where this service will be launched. | string | - | yes |
 | ecs_service_role | ECS service role. | string | `` | no |
+| ecs_services_dependencies | A list of arn can be provided to which the creation of the ecs services is depended. | list | `<list>` | no |
 | enable_alb | If true an ALB is created. | string | `false` | no |
 | enable_dns | Enable creation of DNS record. | string | `true` | no |
+| enable_load_balanced | Creates a services that can be load balanced, a ecs-services, target group and listener rule. | string | `false` | no |
 | enable_monitoring | If true monitoring alerts will be created if needed. | string | `true` | no |
+| enable_target_group_connection | In case `true` a load balanceer is created for the services which will be connected to the target group specified in `target_group_arn`. Creating a load balancer for an ecs service requires a target group with a connected load balancer. To ensure ther right order of creation provide a list of depended arn in `ecs_services_dependencies` | string | `false` | no |
 | environment | Name of the environment (e.g. project-dev); will be prefixed to all resources. | string | - | yes |
+| health_check | Health check for the target group, will overwrite the defaults (merged). Defaults: `protocol=HTTP or HTTPS` depends on `container_ssl`, `path=/`, `matcher=200-399` and `interval=30`. | map | `<map>` | no |
 | health_check_grace_period_seconds | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 1800. Only valid for services configured to use load balancers. | string | `0` | no |
 | health_check_interval | The approximate amount of time, in seconds, between health checks of an individual target. Minimum value 5 seconds, Maximum value 300 seconds. Default 30 seconds. | string | `30` | no |
 | health_check_matcher | HTTP result code used for health validation. | string | `200-399` | no |
 | health_check_path | The url path part for the health check endpoint. | string | `/` | no |
 | internal_alb | If true this ALB is only available within the VPC, default (false) is publicly accessable (internetfacing). | string | `false` | no |
+| lb_listener_rule_condition | The condtion fot he LB listener rule created when `enable_load_balanced` is set. | map | `<map>` | no |
+| listener_arn | Required for `enable_load_balanced`, provide the arn of the listener connected to a load balancer. By default a rule to the root of the listener will be created. | string | `` | no |
 | monitoring_sns_topic_arn | ARN for the SNS topic to send alerts to. | string | `` | no |
 | project | Project cost center / cost allocation. | string | - | yes |
 | service_name | Name of the service to be created. | string | - | yes |
 | ssl_policy | SSL policy applied to an SSL enabled ALB, see https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html | string | `ELBSecurityPolicy-TLS-1-2-2017-01` | no |
 | subnet_ids | Comma separated list with subnet itd. | string | `` | no |
 | tags | A map of tags to add to the resources | map | `<map>` | no |
+| target_group_arn | Required for `enable_target_group_connection` provides the target group arn to be connected to the ecs load balancer. Ensure you provide the arn's of th listeners or listeners rule conntected to the target group as `ecs_services_dependencies`. | string | `` | no |
 | task_role_arn | The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services. | string | `` | no |
 | volumes | Defines the volumes that can be mounted to a container. | list | `<list>` | no |
 | vpc_id | The VPC to launch the ALB in in (e.g. vpc-66ecaa02). | string | `` | no |
@@ -192,6 +199,7 @@ module "service" {
 | alb_dns_name | DNS address of the load balancer, if created. |
 | alb_route53_dns_name | Route 53 DNS name, if created. |
 | aws_alb_target_group_arn | ARN of the loadbalancer target group. |
+| target_group_arn |  |
 
 ## Philips Forest
 

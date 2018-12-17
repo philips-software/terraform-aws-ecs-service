@@ -213,3 +213,47 @@ variable "ssl_policy" {
   description = "SSL policy applied to an SSL enabled ALB, see https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html"
   default     = "ELBSecurityPolicy-TLS-1-2-2017-01"
 }
+
+variable "enable_target_group_connection" {
+  description = "In case `true` a load balanceer is created for the services which will be connected to the target group specified in `target_group_arn`. Creating a load balancer for an ecs service requires a target group with a connected load balancer. To ensure ther right order of creation provide a list of depended arn in `ecs_services_dependencies`"
+  default     = false
+}
+
+variable "enable_load_balanced" {
+  description = "Creates a services that can be load balanced, a ecs-services, target group and listener rule."
+  default     = false
+}
+
+variable "target_group_arn" {
+  type        = "string"
+  description = "Required for `enable_target_group_connection` provides the target group arn to be connected to the ecs load balancer. Ensure you provide the arn's of th listeners or listeners rule conntected to the target group as `ecs_services_dependencies`."
+  default     = ""
+}
+
+variable "listener_arn" {
+  type        = "string"
+  description = "Required for `enable_load_balanced`, provide the arn of the listener connected to a load balancer. By default a rule to the root of the listener will be created."
+  default     = ""
+}
+
+variable "health_check" {
+  type        = "map"
+  description = "Health check for the target group, will overwrite the defaults (merged). Defaults: `protocol=HTTP or HTTPS` depends on `container_ssl`, `path=/`, `matcher=200-399` and `interval=30`."
+  default     = {}
+}
+
+variable "lb_listener_rule_condition" {
+  type        = "map"
+  description = "The condtion fot he LB listener rule created when `enable_load_balanced` is set."
+
+  default = {
+    field  = "path-pattern"
+    values = ["/*"]
+  }
+}
+
+variable "ecs_services_dependencies" {
+  type        = "list"
+  description = "A list of arn can be provided to which the creation of the ecs services is depended."
+  default     = []
+}
