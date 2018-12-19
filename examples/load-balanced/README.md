@@ -1,6 +1,15 @@
 # Test ECS service
 
-This directory contains a test setup for an ECS service. The service will run via HTTP. SSL, and DNS are disabled.
+This examples shows the usages of the module for the options: `enable_load_balanced` and `enable_target_group_connection`.
+
+## service-lb-ssl
+Shows how to use the option `enable_load_balanced` with a Route53 DNS and SSL. Requires to provide a DNS name as variable.
+
+## service-path
+Shows how to use the option `enable_load_balanced` with a custom path.
+
+## service-tg
+Shows how to use the option `enable_target_group_connection` to completly control the loadbalancer outside the service module.
 
 
 ## Prerequisites for running the example
