@@ -244,7 +244,7 @@ variable "health_check" {
 
 variable "lb_listener_rule_condition" {
   type        = "map"
-  description = "The condtion fot he LB listener rule created when `enable_load_balanced` is set."
+  description = "The condition for the LB listener rule which is created when `enable_load_balanced` is set."
 
   default = {
     field  = "path-pattern"
