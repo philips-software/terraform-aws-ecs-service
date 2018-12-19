@@ -215,7 +215,7 @@ variable "ssl_policy" {
 }
 
 variable "enable_target_group_connection" {
-  description = "In case `true` a load balanceer is created for the services which will be connected to the target group specified in `target_group_arn`. Creating a load balancer for an ecs service requires a target group with a connected load balancer. To ensure ther right order of creation provide a list of depended arn in `ecs_services_dependencies`"
+  description = "If `true` a load balancer is created for the service which will be connected to the target group specified in `target_group_arn`. Creating a load balancer for an ecs service requires a target group with a connected load balancer. To ensure the right order of creation, provide a list of depended arns in `ecs_services_dependencies`"
   default     = false
 }
 
