@@ -254,6 +254,6 @@ variable "lb_listener_rule_condition" {
 
 variable "ecs_services_dependencies" {
   type        = "list"
-  description = "A list of arn can be provided to which the creation of the ecs services is depended."
+  description = "A list of arns can be provided to which the creation of the ecs service is depended."
   default     = []
 }
