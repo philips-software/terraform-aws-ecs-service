@@ -226,7 +226,7 @@ variable "enable_load_balanced" {
 
 variable "target_group_arn" {
   type        = "string"
-  description = "Required for `enable_target_group_connection` provides the target group arn to be connected to the ecs load balancer. Ensure you provide the arn's of th listeners or listeners rule conntected to the target group as `ecs_services_dependencies`."
+  description = "Required for `enable_target_group_connection` provides the target group arn to be connected to the ecs load balancer. Ensure you provide the arns of the listeners or listeners rule conntected to the target group as `ecs_services_dependencies`."
   default     = ""
 }
 
