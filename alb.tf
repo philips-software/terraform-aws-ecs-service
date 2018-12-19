@@ -3,7 +3,7 @@ data "aws_vpc" "selected" {
 }
 
 resource "aws_security_group" "security_group_alb" {
-  // Only enable if ALB is required
+  // Only enable if LB is required
   count = "${var.enable_alb ? 1 : 0}"
 
   name_prefix = "${var.environment}-${var.service_name}"
@@ -37,7 +37,7 @@ resource "aws_security_group" "security_group_alb" {
 }
 
 resource "aws_alb" "alb" {
-  // Only enable if ALB is required
+  // Only enable if LB is required
   count = "${var.enable_alb ? 1 : 0}"
 
   internal        = "${var.internal_alb}"
@@ -56,29 +56,43 @@ resource "aws_alb" "alb" {
 }
 
 resource "aws_alb_target_group" "target_group" {
-  // Only enable if ALB is required
-  count = "${var.enable_alb ? 1 : 0}"
+  count = "${var.enable_alb || var.enable_load_balanced ? 1 : 0}"
 
-  port     = "${var.alb_port}"
-  protocol = "${var.container_ssl_enabled ? "HTTPS" : "HTTP"}"
+  port     = "${var.container_port}"
+  protocol = "${var.container_ssl_enabled ? "HTTPS" : "HTTP" }"
   vpc_id   = "${var.vpc_id}"
 
-  health_check {
-    protocol = "${var.container_ssl_enabled ? "HTTPS" : "HTTP"}"
-    path     = "${var.health_check_path}"
-    matcher  = "${var.health_check_matcher}"
-    interval = "${var.health_check_interval}"
-  }
+  health_check = ["${merge(
+    map("protocol", format("%s", var.container_ssl_enabled ? "HTTPS" : "HTTP")),
+    map("path", "/"),
+    map("matcher", format("%s", var.health_check_matcher)),
+    map("interval", format("%s", var.health_check_interval)),
+    var.health_check
+  )}"]
 
   lifecycle {
     create_before_destroy = true
   }
 
+  # ALB id is added as tag to ensure the LB exists before creating the service
   tags = "${merge(map("Name", format("%s", "${var.environment}-${var.service_name}")),
             map("Environment", format("%s", var.environment)),
             map("Project", format("%s", var.project)),
-            map("Application", format("%s", var.service_name)),
             var.tags)}"
+}
+
+resource "aws_lb_listener_rule" "default" {
+  count = "${var.enable_load_balanced ? 1 : 0}"
+
+  listener_arn = "${var.listener_arn}"
+  priority     = 100
+
+  action {
+    type             = "forward"
+    target_group_arn = "${aws_alb_target_group.target_group.arn}"
+  }
+
+  condition = ["${var.lb_listener_rule_condition}"]
 }
 
 resource "aws_alb_listener" "listener" {
