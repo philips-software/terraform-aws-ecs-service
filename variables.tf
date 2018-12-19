@@ -220,7 +220,7 @@ variable "enable_target_group_connection" {
 }
 
 variable "enable_load_balanced" {
-  description = "Creates a services that can be load balanced, a ecs-services, target group and listener rule."
+  description = "Enables load balancing for a service by creating a target group and listener rule. This option should NOT be used together with `enable_target_group_connection` delegates the creation of the target group to component that use this module."
   default     = false
 }
 
