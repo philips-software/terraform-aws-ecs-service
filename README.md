@@ -199,7 +199,6 @@ module "service" {
 | alb_dns_name | DNS address of the load balancer, if created. |
 | alb_route53_dns_name | Route 53 DNS name, if created. |
 | aws_alb_target_group_arn | ARN of the loadbalancer target group. |
-| target_group_arn |  |
 
 ## Philips Forest
 
