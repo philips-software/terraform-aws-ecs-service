@@ -5,10 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
-# 1.2.1 - 2018-12-20
+
+## 1.3.0 - 2018-12-20
+- Added option to control the load balancer externally by setting the target group.
+- Added option to connect to existing load balancer by setting the listener.
+- Changed: vpc data resource is only used when enable_alb is set.
+
+## 1.2.1 - 2018-11-20
 - Changed: #14 https://github.com/philips-software/terraform-aws-ecs-service/issues/14
 
-# 1.2.0 - 2018-12-15
+## 1.2.0 - 2018-11-15
 - Changed: SSL policy is configurable, default upgraded to: ELBSecurityPolicy-TLS-1-2-2017-01. To keep the old policy in place set the variable `ssl_policy` to: `ELBSecurityPolicy-2015-05 `
 - Changed: Removed egres from alb ecurity group, limit port to alb port only.
 
