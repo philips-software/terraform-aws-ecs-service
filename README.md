@@ -2,6 +2,10 @@
 
 Terraform module for creating a ECS docker service with optional load balancer and DNS record
 
+### Deprecated
+- `enable_alb` : Since release 1.3.0 the load balancer can be controlled externally, load balancers can be create via a separate module. In the next major release the embedded alb in this module will be removed.
+
+
 ### Notes
 
 + when using default monitoring metrics make sure that you specify the ecs clustername!!!!
