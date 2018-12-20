@@ -1,4 +1,5 @@
 data "aws_vpc" "selected" {
+  count = "${var.enable_alb ? 1 : 0}"
   id = "${var.vpc_id}"
 }
 

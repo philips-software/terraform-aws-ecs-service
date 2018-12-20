@@ -37,7 +37,8 @@ module "service_custom_tg" {
 }
 
 module "lb_service_custom_tg" {
-  source = "git@github.com:philips-software/terraform-aws-ecs-service-load-balancer.git"
+  source  = "philips-software/ecs-service-load-balancer/aws"
+  version = "1.0.0"
 
   environment = "${var.environment}"
   project     = "${var.project}"
