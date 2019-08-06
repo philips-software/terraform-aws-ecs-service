@@ -1,23 +1,23 @@
 module "service_custom_tg" {
   source = "../../"
 
-  environment = "${var.environment}"
-  project     = "${var.project}"
+  environment = var.environment
+  project     = var.project
 
-  ecs_cluster_id   = "${module.ecs_cluster.id}"
-  ecs_cluster_name = "${module.ecs_cluster.name}"
+  ecs_cluster_id   = module.ecs_cluster.id
+  ecs_cluster_name = module.ecs_cluster.name
   docker_image     = "nginx"
   docker_image_tag = "stable"
   service_name     = "service_custom_tg"
-  ecs_service_role = "${module.ecs_cluster.service_role_name}"
+  ecs_service_role = module.ecs_cluster.service_role_name
 
-  vpc_id                         = "${module.vpc.vpc_id}"
+  vpc_id                         = module.vpc.vpc_id
   container_ssl_enabled          = false
   container_port                 = "80"
   enable_target_group_connection = true
 
-  target_group_arn          = "${aws_alb_target_group.target_group.arn}"
-  ecs_services_dependencies = ["${concat(aws_lb_listener_rule.default.*.arn, list())}"]
+  target_group_arn          = aws_alb_target_group.target_group.arn
+  ecs_services_dependencies = concat(aws_lb_listener_rule.default.*.arn, [])
 
   // Monitoring settings, disabled
   enable_monitoring = false
@@ -33,21 +33,21 @@ module "service_custom_tg" {
           "awslogs-stream-prefix": "${var.service_name}"
         }
       }
-    EOF
+
+EOF
+
 }
 
 module "lb_service_custom_tg" {
-  source  = "philips-software/ecs-service-load-balancer/aws"
-  version = "1.0.0"
+  source = "git::https://github.com/philips-software/terraform-aws-ecs-service-load-balancer.git?ref=terraform012"
 
-  environment = "${var.environment}"
-  project     = "${var.project}"
+  environment = var.environment
+  project     = var.project
   name_suffix = "basic-lb"
-  type        = "application"
 
-  vpc_id   = "${module.vpc.vpc_id}"
-  vpc_cidr = "${module.vpc.vpc_cidr}"
-  subnets  = "${module.vpc.public_subnets}"
+  vpc_id   = module.vpc.vpc_id
+  vpc_cidr = module.vpc.vpc_cidr
+  subnets  = module.vpc.public_subnets
 
   type = "application"
   port = 80
@@ -57,7 +57,7 @@ module "lb_service_custom_tg" {
 }
 
 data "aws_lb" "lb_service_custom_tg" {
-  arn = "${module.lb_service_custom_tg.arn}"
+  arn = module.lb_service_custom_tg.arn
 }
 
 output "lb_service_custom_tg_dns" {
@@ -67,9 +67,9 @@ output "lb_service_custom_tg_dns" {
 resource "aws_alb_target_group" "target_group" {
   port     = "80"
   protocol = "HTTP"
-  vpc_id   = "${module.vpc.vpc_id}"
+  vpc_id   = module.vpc.vpc_id
 
-  health_check = {
+  health_check {
     protocol = "HTTP"
     path     = "/"
     matcher  = "200-399"
@@ -82,17 +82,18 @@ resource "aws_alb_target_group" "target_group" {
 }
 
 resource "aws_lb_listener_rule" "default" {
-  listener_arn = "${module.lb_service_custom_tg.listener_arn}"
+  listener_arn = module.lb_service_custom_tg.listener_arn
 
   priority = 100
 
   action {
     type             = "forward"
-    target_group_arn = "${aws_alb_target_group.target_group.arn}"
+    target_group_arn = aws_alb_target_group.target_group.arn
   }
 
-  condition = {
+  condition {
     field  = "path-pattern"
     values = ["/*"]
   }
 }
+

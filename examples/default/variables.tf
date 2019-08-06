@@ -1,25 +1,21 @@
 variable "aws_region" {
-  type = "string"
+  type = string
 }
 
 variable "environment" {
-  type = "string"
+  type = string
 }
 
 variable "project" {
   description = "Project identifier"
-  type        = "string"
+  type        = string
   default     = "test"
 }
 
 variable "key_name" {
-  type = "string"
+  type = string
 }
 
 variable "ssh_key_file_ecs" {
   default = "generated/id_rsa.pub"
-}
-
-variable "service_name" {
-  default = "test"
 }

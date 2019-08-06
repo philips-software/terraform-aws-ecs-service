@@ -1,72 +1,72 @@
 variable "environment" {
   description = "Name of the environment (e.g. project-dev); will be prefixed to all resources."
-  type        = "string"
+  type        = string
 }
 
 variable "project" {
   description = "Project cost center / cost allocation."
-  type        = "string"
+  type        = string
 }
 
 variable "ecs_cluster_id" {
-  type        = "string"
+  type        = string
   description = "The id of the ECS cluster where this service will be launched."
 }
 
 variable "docker_repository" {
-  type        = "string"
+  type        = string
   default     = "docker.io"
   description = "The location of the docker repository (e.g. 123456789.dkr.ecr.eu-west-1.amazonaws.com)."
 }
 
 variable "docker_image_tag" {
-  type        = "string"
+  type        = string
   default     = "latest"
   description = "The docker image version (e.g. 1.0.0 or latest)."
 }
 
 variable "docker_image" {
-  type        = "string"
+  type        = string
   description = "Name of te docker image."
 }
 
 variable "container_memory" {
   default     = "400"
-  type        = "string"
+  type        = string
   description = "Memory to be assigned to the container."
 }
 
 variable "container_cpu" {
   default     = ""
-  type        = "string"
+  type        = string
   description = "CPU shares to be assigned to the container."
 }
 
 variable "docker_environment_vars" {
   description = "A JSON formated array of tuples of docker enviroment variables."
-  type        = "string"
+  type        = string
   default     = ""
 }
 
 variable "service_name" {
   description = "Name of the service to be created."
-  type        = "string"
+  type        = string
 }
 
 variable "docker_logging_config" {
-  type        = "string"
+  type        = string
   default     = ""
   description = "The configuration for docker container logging"
 }
 
 variable "desired_count" {
-  type        = "string"
+  type        = string
   default     = "1"
   description = "The number of desired tasks"
 }
 
 variable "task_role_arn" {
-  type        = "string"
+  type        = string
   default     = ""
   description = "The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services."
 }
@@ -92,7 +92,7 @@ variable "alb_port" {
 
 variable "alb_certificate_arn" {
   description = "The AWS certificate ARN, required for an ALB via HTTPS. The certificate should be available in the same zone."
-  type        = "string"
+  type        = string
   default     = ""
 }
 
@@ -123,7 +123,7 @@ variable "health_check_grace_period_seconds" {
 
 variable "ecs_service_role" {
   description = "ECS service role."
-  type        = "string"
+  type        = string
   default     = ""
 }
 
@@ -134,7 +134,7 @@ variable "container_ssl_enabled" {
 
 variable "container_port" {
   description = "The container port to be exported to the host."
-  type        = "string"
+  type        = string
 }
 
 variable "enable_dns" {
@@ -143,27 +143,27 @@ variable "enable_dns" {
 }
 
 variable "dns_zone_id" {
-  type        = "string"
+  type        = string
   description = "The ID of the DNS zone."
   default     = ""
 }
 
 variable "dns_name" {
-  type        = "string"
+  type        = string
   description = "The name DNS name."
   default     = ""
 }
 
 variable "vpc_id" {
-  type        = "string"
+  type        = string
   description = "The VPC to launch the ALB in in (e.g. vpc-66ecaa02)."
   default     = ""
 }
 
 variable "subnet_ids" {
-  type        = "string"
-  description = "Comma separated list with subnet itd."
-  default     = ""
+  type        = list
+  description = "List of subnet itd to deploy the ALB."
+  default     = []
 }
 
 variable "internal_alb" {
@@ -173,13 +173,13 @@ variable "internal_alb" {
 
 variable "docker_mount_points" {
   description = "Defines the the mount point for the container."
-  type        = "string"
+  type        = string
   default     = ""
 }
 
 variable "volumes" {
   description = "Defines the volumes that can be mounted to a container."
-  type        = "list"
+  type        = list(map(string))
   default     = []
 }
 
@@ -192,24 +192,24 @@ variable "enable_monitoring" {
 }
 
 variable "monitoring_sns_topic_arn" {
-  type        = "string"
+  type        = string
   description = "ARN for the SNS topic to send alerts to."
   default     = ""
 }
 
 variable "ecs_cluster_name" {
-  type        = "string"
+  type        = string
   description = "The name of the ECS cluster where this service will be launched."
 }
 
 variable "tags" {
-  type        = "map"
+  type        = map(string)
   description = "A map of tags to add to the resources"
   default     = {}
 }
 
 variable "ssl_policy" {
-  type        = "string"
+  type        = string
   description = "SSL policy applied to an SSL enabled ALB, see https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html"
   default     = "ELBSecurityPolicy-TLS-1-2-2017-01"
 }
@@ -225,35 +225,36 @@ variable "enable_load_balanced" {
 }
 
 variable "target_group_arn" {
-  type        = "string"
+  type        = string
   description = "Required for `enable_target_group_connection` provides the target group arn to be connected to the ecs load balancer. Ensure you provide the arns of the listeners or listeners rule conntected to the target group as `ecs_services_dependencies`."
   default     = ""
 }
 
 variable "listener_arn" {
-  type        = "string"
+  type        = string
   description = "Required for `enable_load_balanced`, provide the arn of the listener connected to a load balancer. By default a rule to the root of the listener will be created."
   default     = ""
 }
 
 variable "health_check" {
-  type        = "map"
+  type        = map(string)
   description = "Health check for the target group, will overwrite the defaults (merged). Defaults: `protocol=HTTP or HTTPS` depends on `container_ssl`, `path=/`, `matcher=200-399` and `interval=30`."
   default     = {}
 }
 
 variable "lb_listener_rule_condition" {
-  type        = "map"
+  type        = map(string)
   description = "The condition for the LB listener rule which is created when `enable_load_balanced` is set."
 
   default = {
     field  = "path-pattern"
-    values = ["/*"]
+    values = "/*"
   }
 }
 
 variable "ecs_services_dependencies" {
-  type        = "list"
+  type        = list(string)
   description = "A list of arns can be provided to which the creation of the ecs service is depended."
   default     = []
 }
+

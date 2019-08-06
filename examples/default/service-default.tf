@@ -1,22 +1,21 @@
 module "service" {
   source = "../../"
 
-  environment = "${var.environment}"
-  project     = "${var.project}"
+  environment = var.environment
+  project     = var.project
 
-  ecs_cluster_id   = "${module.ecs_cluster.id}"
-  ecs_cluster_name = "${module.ecs_cluster.name}"
-  docker_image     = "npalm/docker-introduction"
-  service_name     = "${var.service_name}"
+  vpc_id           = module.vpc.vpc_id
+  subnet_ids       = module.vpc.public_subnets
+  ecs_cluster_id   = module.ecs_cluster.id
+  ecs_cluster_name = module.ecs_cluster.name
+  docker_image     = "nginx"
+  service_name     = "service-default"
 
   // ALB part, over http without dns entry
-  ecs_service_role      = "${module.ecs_cluster.service_role_name}"
+  ecs_service_role      = module.ecs_cluster.service_role_name
   enable_alb            = true
-  internal_alb          = false
-  vpc_id                = "${module.vpc.vpc_id}"
-  subnet_ids            = "${join(",", module.vpc.public_subnets)}"
-  alb_port              = 80
   alb_protocol          = "HTTP"
+  alb_port              = "80"
   container_ssl_enabled = false
   container_port        = "80"
 
@@ -34,8 +33,11 @@ module "service" {
         "options": {
           "awslogs-group": "${var.environment}",
           "awslogs-region": "${var.aws_region}",
-          "awslogs-stream-prefix": "${var.service_name}"
+          "awslogs-stream-prefix": "service-default"
         }
       }
-    EOF
+
+EOF
+
 }
+
