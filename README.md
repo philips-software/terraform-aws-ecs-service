@@ -21,20 +21,19 @@ Please see the examples:
 - [default](./examples/default) - shows basic usages such as: ALB, EFS mounts.
 - [load-balanced](./examples/load-balanced) - shows several scenario's for using load balancers attached to an ECS service.
 
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | alb\_certificate\_arn | The AWS certificate ARN, required for an ALB via HTTPS. The certificate should be available in the same zone. | string | `""` | no |
-| alb\_port | Defines to port for the ALB. | string | `"443"` | no |
+| alb\_port | Defines to port for the ALB. | number | `"443"` | no |
 | alb\_protocol | Defines the ALB protocol to be used. | string | `"HTTPS"` | no |
-| alb\_timeout | The idle timeout in seconds of the ALB | string | `"60"` | no |
+| alb\_timeout | The idle timeout in seconds of the ALB | number | `"60"` | no |
 | container\_cpu | CPU shares to be assigned to the container. | string | `""` | no |
-| container\_memory | Memory to be assigned to the container. | string | `"400"` | no |
+| container\_memory | Memory to be assigned to the container. | number | `"400"` | no |
 | container\_port | The container port to be exported to the host. | string | n/a | yes |
-| container\_ssl\_enabled | Set to true if container has SSL enabled. This requires that the container can handle HTTPS traffic. | string | `"false"` | no |
-| desired\_count | The number of desired tasks | string | `"1"` | no |
+| container\_ssl\_enabled | Set to true if container has SSL enabled. This requires that the container can handle HTTPS traffic. | bool | `"false"` | no |
+| desired\_count | The number of desired tasks | number | `"1"` | no |
 | dns\_name | The name DNS name. | string | `""` | no |
 | dns\_zone\_id | The ID of the DNS zone. | string | `""` | no |
 | docker\_environment\_vars | A JSON formated array of tuples of docker enviroment variables. | string | `""` | no |
@@ -47,25 +46,25 @@ Please see the examples:
 | ecs\_cluster\_name | The name of the ECS cluster where this service will be launched. | string | n/a | yes |
 | ecs\_service\_role | ECS service role. | string | `""` | no |
 | ecs\_services\_dependencies | A list of arns can be provided to which the creation of the ecs service is depended. | list(string) | `<list>` | no |
-| enable\_alb | If true an ALB is created. | string | `"false"` | no |
-| enable\_dns | Enable creation of DNS record. | string | `"true"` | no |
-| enable\_load\_balanced | Enables load balancing for a service by creating a target group and listener rule. This option should NOT be used together with `enable_target_group_connection` delegates the creation of the target group to component that use this module. | string | `"false"` | no |
-| enable\_monitoring | If true monitoring alerts will be created if needed. | string | `"true"` | no |
-| enable\_target\_group\_connection | If `true` a load balancer is created for the service which will be connected to the target group specified in `target_group_arn`. Creating a load balancer for an ecs service requires a target group with a connected load balancer. To ensure the right order of creation, provide a list of depended arns in `ecs_services_dependencies` | string | `"false"` | no |
+| enable\_alb | If true an ALB is created. | bool | `"false"` | no |
+| enable\_dns | Enable creation of DNS record. | bool | `"true"` | no |
+| enable\_load\_balanced | Enables load balancing for a service by creating a target group and listener rule. This option should NOT be used together with `enable_target_group_connection` delegates the creation of the target group to component that use this module. | bool | `"false"` | no |
+| enable\_monitoring | If true monitoring alerts will be created if needed. | bool | `"true"` | no |
+| enable\_target\_group\_connection | If `true` a load balancer is created for the service which will be connected to the target group specified in `target_group_arn`. Creating a load balancer for an ecs service requires a target group with a connected load balancer. To ensure the right order of creation, provide a list of depended arns in `ecs_services_dependencies` | bool | `"false"` | no |
 | environment | Name of the environment (e.g. project-dev); will be prefixed to all resources. | string | n/a | yes |
 | health\_check | Health check for the target group, will overwrite the defaults (merged). Defaults: `protocol=HTTP or HTTPS` depends on `container_ssl`, `path=/`, `matcher=200-399` and `interval=30`. | map(string) | `<map>` | no |
 | health\_check\_grace\_period\_seconds | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 1800. Only valid for services configured to use load balancers. | string | `"0"` | no |
 | health\_check\_interval | The approximate amount of time, in seconds, between health checks of an individual target. Minimum value 5 seconds, Maximum value 300 seconds. Default 30 seconds. | string | `"30"` | no |
 | health\_check\_matcher | HTTP result code used for health validation. | string | `"200-399"` | no |
 | health\_check\_path | The url path part for the health check endpoint. | string | `"/"` | no |
-| internal\_alb | If true this ALB is only available within the VPC, default (false) is publicly accessable (internetfacing). | string | `"false"` | no |
+| internal\_alb | If true this ALB is only available within the VPC, default (false) is publicly accessable (internetfacing). | bool | `"false"` | no |
 | lb\_listener\_rule\_condition | The condition for the LB listener rule which is created when `enable_load_balanced` is set. | map(string) | `<map>` | no |
 | listener\_arn | Required for `enable_load_balanced`, provide the arn of the listener connected to a load balancer. By default a rule to the root of the listener will be created. | string | `""` | no |
 | monitoring\_sns\_topic\_arn | ARN for the SNS topic to send alerts to. | string | `""` | no |
 | project | Project cost center / cost allocation. | string | n/a | yes |
 | service\_name | Name of the service to be created. | string | n/a | yes |
 | ssl\_policy | SSL policy applied to an SSL enabled ALB, see https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html | string | `"ELBSecurityPolicy-TLS-1-2-2017-01"` | no |
-| subnet\_ids | List of subnet itd to deploy the ALB. | list | `<list>` | no |
+| subnet\_ids | List of subnet itd to deploy the ALB. | list(string) | `<list>` | no |
 | tags | A map of tags to add to the resources | map(string) | `<map>` | no |
 | target\_group\_arn | Required for `enable_target_group_connection` provides the target group arn to be connected to the ecs load balancer. Ensure you provide the arns of the listeners or listeners rule conntected to the target group as `ecs_services_dependencies`. | string | `""` | no |
 | task\_role\_arn | The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services. | string | `""` | no |
@@ -79,6 +78,18 @@ Please see the examples:
 | alb\_dns\_name | DNS address of the load balancer, if created. |
 | alb\_route53\_dns\_name | Route 53 DNS name, if created. |
 | aws\_alb\_target\_group\_arn | ARN of the loadbalancer target group. |
+
+## Automated checks
+Currently the automated checks are limited. In CI the following checks are done for the root and each example.
+- lint: `terraform validate` and `terraform fmt`
+- basic init / get check: `terraform init -get -backend=false -input=false`
+
+## Generation variable documentation
+A markdown table for variables can be generated as follow. Generation requires awk and terraform-docs installed.
+
+```
+ .ci/bin/terraform-docs.sh markdown
+```
 
 ## Philips Forest
 

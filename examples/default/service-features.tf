@@ -38,9 +38,9 @@ module "service-features" {
   ecs_service_role      = module.ecs_cluster.service_role_name
   enable_alb            = true
   alb_protocol          = "HTTP"
-  alb_port              = "80"
+  alb_port              = 80
   container_ssl_enabled = false
-  container_port        = "80"
+  container_port        = 80
 
   // DNS specifc settings for the ALB, disalbed
   enable_dns = false
@@ -49,7 +49,7 @@ module "service-features" {
     protocol = "HTTP"
     path     = "/"
     matcher  = "200-399"
-    interval = "30"
+    interval = 30
   }
 
 

@@ -89,7 +89,7 @@ resource "aws_alb_target_group" "target_group" {
         "protocol" = format("%s", var.container_ssl_enabled ? "HTTPS" : "HTTP")
       },
       {
-        "path" = "/"
+        "path" = format("%s", var.health_check_path)
       },
       {
         "matcher" = format("%s", var.health_check_matcher)
