@@ -65,7 +65,7 @@ resource "aws_alb_target_group" "target_group" {
 
   health_check = ["${merge(
     map("protocol", format("%s", var.container_ssl_enabled ? "HTTPS" : "HTTP")),
-    map("path", "/"),
+    map("path", format("%s", var.health_check_path)),
     map("matcher", format("%s", var.health_check_matcher)),
     map("interval", format("%s", var.health_check_interval)),
     var.health_check
