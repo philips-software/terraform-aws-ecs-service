@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 1.4.0 - 2019-08-09
+- Changed: health_check_path is always '/' upon aws_alb_target_group creation #22 @tminuss
+  
 ## 1.3.0 - 2018-12-20
 - Added option to control the load balancer externally by setting the target group.
 - Added option to connect to existing load balancer by setting the listener.
@@ -39,7 +42,9 @@ https://github.com/philips-software/terraform-aws-ecs-service/tags/1.0.0
 - Refactor outputs to support terraform 0.11
 - Add support to mount volumes
 
-[Unreleased]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.2.1...HEAD
+[Unreleased]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.4.0...HEAD
+[1.4.0]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.3.0...1.4.0
+[1.3.0]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/philips-software/terraform-aws-ecs-service/compare/1.0.1...1.1.0
