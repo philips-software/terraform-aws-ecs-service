@@ -1,5 +1,5 @@
 module "bastion" {
-  source = "git::https://github.com/philips-software/terraform-aws-bastion.git?ref=terraform012"
+  source = "git::https://github.com/philips-software/terraform-aws-bastion.git?ref=2.0.0"
 
   enable_bastion = "false"
 

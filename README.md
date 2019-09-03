@@ -4,8 +4,8 @@ Terraform module for creating a ECS docker service with optional load balancer a
 
 ## Terraform version
 
-- Terraform 0.12: Pin module to `~> 2+`, submit pull request to branch `terrafomr012`
-- Terraform 0.11: Pin module to `~> 1.x`, submit pull request to branch `develop`
+- Terraform 0.12: Pin module to `~> 2+`, submit pull request to branch `develop`
+- Terraform 0.11: Pin module to `~> 1.x`, submit pull request to branch `terrafomr011`
 
 
 ### Deprecated
