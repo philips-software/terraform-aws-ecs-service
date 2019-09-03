@@ -1,6 +1,8 @@
 # Test ECS service
 
-This directory contains a test setup for an ECS service. The service will run via HTTP. SSL, and DNS are disabled.
+This directory contains a test setup for an ECS service. 
+- service default: ALB via HTTP
+- service features: based on default, custom healthcheck and EFS
 
 
 ## Prerequisites for running the example

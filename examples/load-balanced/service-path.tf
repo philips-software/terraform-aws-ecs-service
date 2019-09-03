@@ -5,24 +5,24 @@ locals {
 module "service_custom_path" {
   source = "../../"
 
-  environment = "${var.environment}"
-  project     = "${var.project}"
+  environment = var.environment
+  project     = var.project
 
-  ecs_cluster_id   = "${module.ecs_cluster.id}"
-  ecs_cluster_name = "${module.ecs_cluster.name}"
+  ecs_cluster_id   = module.ecs_cluster.id
+  ecs_cluster_name = module.ecs_cluster.name
   docker_image     = "tomcat"
   docker_image_tag = "latest"
   service_name     = "service_custom_path"
-  ecs_service_role = "${module.ecs_cluster.service_role_name}"
+  ecs_service_role = module.ecs_cluster.service_role_name
 
-  vpc_id               = "${module.vpc.vpc_id}"
+  vpc_id               = module.vpc.vpc_id
   container_port       = "8080"
   enable_load_balanced = true
-  listener_arn         = "${module.lb_service_custom_path.listener_arn}"
+  listener_arn         = module.lb_service_custom_path.listener_arn
 
   lb_listener_rule_condition = {
     field  = "path-pattern"
-    values = ["/${local.service_custom_path_path}*"]
+    values = "/${local.service_custom_path_path}*"
   }
 
   health_check = {
@@ -46,21 +46,22 @@ module "service_custom_path" {
           "awslogs-stream-prefix": "${var.service_name}"
         }
       }
-    EOF
+
+EOF
+
 }
 
 module "lb_service_custom_path" {
-  source  = "philips-software/ecs-service-load-balancer/aws"
-  version = "1.0.0"
+  source = "git::https://github.com/philips-software/terraform-aws-ecs-service-load-balancer.git?ref=terraform012"
 
-  environment = "${var.environment}"
-  project     = "${var.project}"
+  environment = var.environment
+  project     = var.project
   name_suffix = "basic-lb"
   type        = "application"
 
-  vpc_id   = "${module.vpc.vpc_id}"
-  vpc_cidr = "${module.vpc.vpc_cidr}"
-  subnets  = "${module.vpc.public_subnets}"
+  vpc_id   = module.vpc.vpc_id
+  vpc_cidr = module.vpc.vpc_cidr
+  subnets  = module.vpc.public_subnets
 
   create_listener = true
   port            = 80
@@ -69,9 +70,10 @@ module "lb_service_custom_path" {
 }
 
 data "aws_lb" "lb_service_custom_path" {
-  arn = "${module.lb_service_custom_path.arn}"
+  arn = module.lb_service_custom_path.arn
 }
 
 output "lb_service_custom_path_dns" {
   value = "http://${data.aws_lb.lb_service_custom_path.dns_name}/${local.service_custom_path_path}"
 }
+
