@@ -37,7 +37,7 @@ data "template_cloudinit_config" "config" {
 }
 
 module "ecs_cluster" {
-  source = "git::https://github.com/philips-software/terraform-aws-ecs.git?ref=terraform012"
+  source = "git::https://github.com/philips-software/terraform-aws-ecs.git?ref=2.0.0"
 
   user_data = "${data.template_cloudinit_config.config.rendered}"
 
