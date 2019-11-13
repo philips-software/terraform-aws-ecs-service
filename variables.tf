@@ -42,6 +42,12 @@ variable "container_cpu" {
   default     = ""
 }
 
+variable "launch_type" {
+  description = "Sets launch type for service. Options are: EC2, FARGATE. Default is EC2."
+  type        = string
+  default     = "EC2"
+}
+
 variable "docker_environment_vars" {
   description = "A JSON formated array of tuples of docker enviroment variables."
   type        = string
@@ -190,6 +196,11 @@ variable "docker_mount_points" {
 variable "volumes" {
   description = "Defines the volumes that can be mounted to a container."
   type        = list(map(string))
+  default     = []
+}
+
+variable "awsvpc_service_security_groups" {
+  description = "List of security groups to be attached to service running in awsvpc network mode. Required for launch type FARGATE."
   default     = []
 }
 
