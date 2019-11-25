@@ -37,7 +37,7 @@ variable "container_memory" {
 }
 
 variable "container_cpu" {
-  description = "CPU shares to be assigned to the container."
+  description = "CPU shares to be assigned to the container. Required for FARGATE"
   type        = string
   default     = ""
 }
@@ -176,7 +176,7 @@ variable "vpc_id" {
 }
 
 variable "subnet_ids" {
-  description = "List of subnet itd to deploy the ALB."
+  description = "List of subnet ids to deploy the ALB."
   type        = list(string)
   default     = []
 }
