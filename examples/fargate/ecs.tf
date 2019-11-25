@@ -29,11 +29,6 @@ data "template_cloudinit_config" "config" {
     content_type = "text/x-shellscript"
     content      = data.template_file.ecs_user_data_ecs.rendered
   }
-
-  part {
-    content_type = module.efs.amazon_linux_cloudinit_config_part["content_type"]
-    content      = module.efs.amazon_linux_cloudinit_config_part["content"]
-  }
 }
 
 module "ecs_cluster" {

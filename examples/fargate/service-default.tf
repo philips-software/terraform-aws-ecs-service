@@ -48,14 +48,6 @@ module "service" {
   container_cpu         = 256
   container_memory      = 512
 
-  // CPU value       Memory value
-  // 256 (.25 vCPU)  0.5 GB, 1 GB, 2 GB
-  // 512 (.5 vCPU)   1 GB, 2 GB, 3 GB, 4 GB
-  // 1024 (1 vCPU)   2 GB, 3 GB, 4 GB, 5 GB, 6 GB, 7 GB, 8 GB
-  // 2048 (2 vCPU)   Between 4 GB and 16 GB in 1-GB increments
-  // 4096 (4 vCPU)   Between 8 GB and 30 GB in 1-GB increments
-  // https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html
-
   // DNS specifc settings for the ALB, disalbed
   enable_dns = false
 
