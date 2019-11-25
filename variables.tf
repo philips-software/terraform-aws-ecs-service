@@ -204,6 +204,11 @@ variable "awsvpc_service_security_groups" {
   default     = []
 }
 
+variable "awsvpc_service_subnetids" {
+  description = "List of subnet ids to which a service is deployed in fargate mode."
+  default     = []
+}
+
 // ------
 // Monitoring specific variables
 // ------

@@ -49,9 +49,9 @@ module "ecs_cluster" {
   vpc_id   = module.vpc.vpc_id
   vpc_cidr = module.vpc.vpc_cidr
 
-  min_instance_count     = 1
-  max_instance_count     = 1
-  desired_instance_count = 1
+  min_instance_count     = 0
+  max_instance_count     = 0
+  desired_instance_count = 0
 
   instance_type = "t2.micro"
 

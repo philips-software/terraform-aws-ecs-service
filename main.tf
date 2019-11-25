@@ -31,9 +31,9 @@ resource "aws_ecs_task_definition" "task" {
     }
   }
 
-  cpu = var.launch_type == "FARGATE" ? var.container_cpu : null
-  memory = var.launch_type == "FARGATE" ? var.container_memory : null
-  execution_role_arn = var.launch_type == "FARGATE" ? aws_iam_role.ecs_tasks_execution_role[0].arn : null
+  cpu                      = var.launch_type == "FARGATE" ? var.container_cpu : null
+  memory                   = var.launch_type == "FARGATE" ? var.container_memory : null
+  execution_role_arn       = var.launch_type == "FARGATE" ? aws_iam_role.ecs_tasks_execution_role[0].arn : null
   requires_compatibilities = [var.launch_type]
 
   container_definitions = data.template_file.docker-template.rendered
@@ -80,10 +80,10 @@ resource "aws_ecs_service" "service_alb" {
   launch_type = var.launch_type
 
   dynamic "network_configuration" {
-    for_each = var.launch_type == "FARGATE" ? list(var.launch_type): []
+    for_each = var.launch_type == "FARGATE" ? list(var.launch_type) : []
     content {
       security_groups = var.awsvpc_service_security_groups
-      subnets = var.subnet_ids
+      subnets         = var.awsvpc_service_subnetids
     }
   }
 }

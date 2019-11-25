@@ -1,6 +1,6 @@
-resource "aws_security_group" "service_sg" {
-  name   = "${var.environment}-service-sg"
-  vpc_id = "${module.vpc.vpc_id}"
+resource "aws_security_group" "awsvpc_sg" {
+  name   = "${var.environment}-awsvpc-sg"
+  vpc_id = module.vpc.vpc_id
 
   ingress {
     protocol  = "tcp"
@@ -20,7 +20,7 @@ resource "aws_security_group" "service_sg" {
   }
 
   tags = {
-    Name        = "${var.environment}-service-sg"
+    Name        = "${var.environment}-awsvpc-sg"
     Environment = "${var.environment}"
   }
 }
@@ -32,7 +32,7 @@ module "service" {
   project     = var.project
 
   vpc_id           = module.vpc.vpc_id
-  subnet_ids       = module.vpc.private_subnets
+  subnet_ids       = module.vpc.public_subnets
   ecs_cluster_id   = module.ecs_cluster.id
   ecs_cluster_name = module.ecs_cluster.name
   docker_image     = "nginx"
@@ -76,7 +76,8 @@ module "service" {
 
 EOF
 
-  launch_type = "FARGATE"
-  awsvpc_service_security_groups = ["${aws_security_group.service_sg.id}"]
+  launch_type                    = "FARGATE"
+  awsvpc_service_security_groups = ["${aws_security_group.awsvpc_sg.id}"]
+  awsvpc_service_subnetids       = module.vpc.private_subnets
 }
 
