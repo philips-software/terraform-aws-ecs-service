@@ -83,6 +83,8 @@ resource "aws_alb_target_group" "target_group" {
   protocol = var.container_ssl_enabled ? "HTTPS" : "HTTP"
   vpc_id   = var.vpc_id
 
+  target_type = var.launch_type == "FARGATE" ? "ip" : "instance"
+
   dynamic "health_check" {
     for_each = [merge(
       {

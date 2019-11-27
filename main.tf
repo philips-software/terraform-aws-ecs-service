@@ -30,8 +30,16 @@ resource "aws_ecs_task_definition" "task" {
       name      = volume.value["name"]
     }
   }
+
+  cpu                      = var.launch_type == "FARGATE" ? var.container_cpu : null
+  memory                   = var.launch_type == "FARGATE" ? var.container_memory : null
+  execution_role_arn       = var.launch_type == "FARGATE" ? aws_iam_role.ecs_tasks_execution_role[0].arn : null
+  requires_compatibilities = [var.launch_type]
+
   container_definitions = data.template_file.docker-template.rendered
   task_role_arn         = var.task_role_arn
+
+  network_mode = var.launch_type == "FARGATE" ? "awsvpc" : "bridge"
 }
 
 locals {
@@ -68,7 +76,16 @@ resource "aws_ecs_service" "service_alb" {
     container_port   = var.container_port
   }
 
-  iam_role = var.ecs_service_role
+  iam_role    = var.launch_type != "FARGATE" ? var.ecs_service_role : null
+  launch_type = var.launch_type
+
+  dynamic "network_configuration" {
+    for_each = var.launch_type == "FARGATE" ? list(var.launch_type) : []
+    content {
+      security_groups = var.awsvpc_service_security_groups
+      subnets         = var.awsvpc_service_subnetids
+    }
+  }
 }
 
 resource "aws_ecs_service" "service" {
@@ -79,5 +96,6 @@ resource "aws_ecs_service" "service" {
   cluster         = var.ecs_cluster_id
   task_definition = aws_ecs_task_definition.task.arn
   desired_count   = var.desired_count
+  launch_type     = var.launch_type
 }
 
