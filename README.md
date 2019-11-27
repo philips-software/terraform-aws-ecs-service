@@ -1,6 +1,6 @@
 # Terraform module for creating an ECS service.
 
-Terraform module for creating a ECS docker service with optional load balancer and DNS record
+Terraform module for creating a ECS docker service with optional load balancer and DNS record. Has support for both EC2 and Fargate.
 
 ## Terraform version
 
@@ -15,11 +15,13 @@ Terraform module for creating a ECS docker service with optional load balancer a
 ### Notes
 
 + when using default monitoring metrics make sure that you specify the ecs clustername!!!!
++ For Fargate, check the supported CPU/Memory configurations: https://aws.amazon.com/fargate/pricing/
 
 ## Example usages:
 Please see the examples:
 - [default](./examples/default) - shows basic usages such as: ALB, EFS mounts.
 - [load-balanced](./examples/load-balanced) - shows several scenario's for using load balancers attached to an ECS service.
+- [fargate](./examples/fargate) - shows several scenario's for using a Fargate ECS service.
 
 ## Inputs
 
@@ -29,6 +31,8 @@ Please see the examples:
 | alb\_port | Defines to port for the ALB. | number | `"443"` | no |
 | alb\_protocol | Defines the ALB protocol to be used. | string | `"HTTPS"` | no |
 | alb\_timeout | The idle timeout in seconds of the ALB | number | `"60"` | no |
+| awsvpc\_service\_security\_groups | List of security groups to be attached to service running in awsvpc network mode. Required for launch type FARGATE. | list | `<list>` | no |
+| awsvpc\_service\_subnetids | List of subnet ids to which a service is deployed in fargate mode. | list | `<list>` | no |
 | container\_cpu | CPU shares to be assigned to the container. | string | `""` | no |
 | container\_memory | Memory to be assigned to the container. | number | `"400"` | no |
 | container\_port | The container port to be exported to the host. | string | n/a | yes |
@@ -58,13 +62,14 @@ Please see the examples:
 | health\_check\_matcher | HTTP result code used for health validation. | string | `"200-399"` | no |
 | health\_check\_path | The url path part for the health check endpoint. | string | `"/"` | no |
 | internal\_alb | If true this ALB is only available within the VPC, default (false) is publicly accessable (internetfacing). | bool | `"false"` | no |
+| launch\_type | Sets launch type for service. Options are: EC2, FARGATE. Default is EC2. | string | `"EC2"` | no |
 | lb\_listener\_rule\_condition | The condition for the LB listener rule which is created when `enable_load_balanced` is set. | map(string) | `<map>` | no |
 | listener\_arn | Required for `enable_load_balanced`, provide the arn of the listener connected to a load balancer. By default a rule to the root of the listener will be created. | string | `""` | no |
 | monitoring\_sns\_topic\_arn | ARN for the SNS topic to send alerts to. | string | `""` | no |
 | project | Project cost center / cost allocation. | string | n/a | yes |
 | service\_name | Name of the service to be created. | string | n/a | yes |
 | ssl\_policy | SSL policy applied to an SSL enabled ALB, see https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html | string | `"ELBSecurityPolicy-TLS-1-2-2017-01"` | no |
-| subnet\_ids | List of subnet itd to deploy the ALB. | list(string) | `<list>` | no |
+| subnet\_ids | List of subnet ids to deploy the ALB. | list(string) | `<list>` | no |
 | tags | A map of tags to add to the resources | map(string) | `<map>` | no |
 | target\_group\_arn | Required for `enable_target_group_connection` provides the target group arn to be connected to the ecs load balancer. Ensure you provide the arns of the listeners or listeners rule conntected to the target group as `ecs_services_dependencies`. | string | `""` | no |
 | task\_role\_arn | The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services. | string | `""` | no |

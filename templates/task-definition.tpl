@@ -6,7 +6,7 @@
     "memory": ${container_memory},
     ${container_cpu}
     "portMappings": [
-      { "HostPort": 0, "ContainerPort": ${container_port} }
+      { "ContainerPort": ${container_port} }
     ],
     "environment": [
       ${environment_vars}

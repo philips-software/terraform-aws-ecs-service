@@ -37,9 +37,15 @@ variable "container_memory" {
 }
 
 variable "container_cpu" {
-  description = "CPU shares to be assigned to the container."
+  description = "CPU shares to be assigned to the container. Required for FARGATE"
   type        = string
   default     = ""
+}
+
+variable "launch_type" {
+  description = "Sets launch type for service. Options are: EC2, FARGATE. Default is EC2."
+  type        = string
+  default     = "EC2"
 }
 
 variable "docker_environment_vars" {
@@ -129,7 +135,7 @@ variable "health_check_grace_period_seconds" {
 }
 
 variable "ecs_service_role" {
-  description = "ECS service role."
+  description = "ECS service role. Required when using a load balancer when launch type is not FARGATE"
   type        = string
   default     = ""
 }
@@ -170,7 +176,7 @@ variable "vpc_id" {
 }
 
 variable "subnet_ids" {
-  description = "List of subnet itd to deploy the ALB."
+  description = "List of subnet ids to deploy the ALB."
   type        = list(string)
   default     = []
 }
@@ -190,6 +196,16 @@ variable "docker_mount_points" {
 variable "volumes" {
   description = "Defines the volumes that can be mounted to a container."
   type        = list(map(string))
+  default     = []
+}
+
+variable "awsvpc_service_security_groups" {
+  description = "List of security groups to be attached to service running in awsvpc network mode. Required for launch type FARGATE."
+  default     = []
+}
+
+variable "awsvpc_service_subnetids" {
+  description = "List of subnet ids to which a service is deployed in fargate mode."
   default     = []
 }
 
