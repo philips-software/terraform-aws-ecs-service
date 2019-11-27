@@ -135,7 +135,7 @@ variable "health_check_grace_period_seconds" {
 }
 
 variable "ecs_service_role" {
-  description = "ECS service role."
+  description = "ECS service role. Required when using a load balancer when launch type is not FARGATE"
   type        = string
   default     = ""
 }

@@ -76,7 +76,7 @@ resource "aws_ecs_service" "service_alb" {
     container_port   = var.container_port
   }
 
-  iam_role    = var.launch_type == "EC2" ? var.ecs_service_role : null
+  iam_role    = var.launch_type != "FARGATE" ? var.ecs_service_role : null
   launch_type = var.launch_type
 
   dynamic "network_configuration" {
