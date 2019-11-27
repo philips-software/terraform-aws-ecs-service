@@ -4,8 +4,8 @@ resource "aws_security_group" "awsvpc_sg" {
 
   ingress {
     protocol  = "tcp"
-    from_port = 0
-    to_port   = 65535
+    from_port = 80
+    to_port   = 80
 
     cidr_blocks = [
       "${module.vpc.vpc_cidr}",
