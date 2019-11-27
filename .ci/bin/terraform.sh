@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 TARGET_DIR=/opt
-PATH=${PATH}:${TARGET_DIR}
+PATH=${TARGET_DIR}:${PATH}
 
-TERRAFORM_VERSION=${1:-"0.12.7"}
+TERRAFORM_VERSION=${1:-"0.12.16"}
 OS=${2:-"linux"}
 TERRAFORM_URL="https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_${OS}_amd64.zip"
 
