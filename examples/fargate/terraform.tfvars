@@ -1,6 +1,4 @@
-key_name = "test-forest"
-
-environment = "forest"
+environment = "forest-fargate"
 
 project = "test"
 

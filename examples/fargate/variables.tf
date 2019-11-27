@@ -11,11 +11,3 @@ variable "project" {
   type        = string
   default     = "test"
 }
-
-variable "key_name" {
-  type = string
-}
-
-variable "ssh_key_file_ecs" {
-  default = "generated/id_rsa.pub"
-}
