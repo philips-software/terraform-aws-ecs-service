@@ -11,3 +11,8 @@ module "bastion" {
   subnet_id  = element(module.vpc.public_subnets, 0)
   vpc_id     = module.vpc.vpc_id
 }
+
+resource "aws_key_pair" "key" {
+  key_name   = var.key_name
+  public_key = file(var.ssh_key_file_ecs)
+}

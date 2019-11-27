@@ -33,13 +33,13 @@ module "service" {
 
   vpc_id           = module.vpc.vpc_id
   subnet_ids       = module.vpc.public_subnets
-  ecs_cluster_id   = module.ecs_cluster.id
-  ecs_cluster_name = module.ecs_cluster.name
+  ecs_cluster_id   = aws_ecs_cluster.cluster.id
+  ecs_cluster_name = aws_ecs_cluster.cluster.name
   docker_image     = "nginx"
   service_name     = "service-default"
 
   // ALB part, over http without dns entry
-  ecs_service_role      = module.ecs_cluster.service_role_name
+  ecs_service_role      = aws_iam_role.ecs_service.name
   enable_alb            = true
   alb_protocol          = "HTTP"
   alb_port              = 80
