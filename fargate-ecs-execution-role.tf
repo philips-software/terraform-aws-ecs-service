@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "ecs_tasks_execution_role" {
 
 resource "aws_iam_role" "ecs_tasks_execution_role" {
   count              = var.launch_type == "FARGATE" ? 1 : 0
-  name               = "${var.environment}-ecs-task-execution-role"
+  name               = "${var.environment}-${var.service_name}-ecs-task-execution-role"
   assume_role_policy = data.aws_iam_policy_document.ecs_tasks_execution_role.json
 }
 
