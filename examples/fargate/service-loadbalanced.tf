@@ -1,5 +1,5 @@
-resource "aws_security_group" "awsvpc_sg" {
-  name   = "${var.environment}-awsvpc-sg"
+resource "aws_security_group" "awsvpc_loadbalanced_sg" {
+  name   = "${var.environment}-awsvpc-loadbalanced-sg"
   vpc_id = module.vpc.vpc_id
 
   ingress {
@@ -27,12 +27,12 @@ resource "aws_security_group" "awsvpc_sg" {
   }
 
   tags = {
-    Name        = "${var.environment}-awsvpc-sg"
+    Name        = "${var.environment}-loadbalanced-awsvpc-sg"
     Environment = "${var.environment}"
   }
 }
 
-module "service" {
+module "service_loadbalanced" {
   source = "../../"
 
   environment = var.environment
@@ -43,11 +43,16 @@ module "service" {
   ecs_cluster_id   = aws_ecs_cluster.cluster.id
   ecs_cluster_name = aws_ecs_cluster.cluster.name
   docker_image     = "nginx"
-  service_name     = "service-default"
+  service_name     = "service-loadbalanced"
 
-  container_port   = 80
-  container_cpu    = 256
-  container_memory = 512
+  // ALB part, over http without dns entry
+  enable_alb            = true
+  alb_protocol          = "HTTP"
+  alb_port              = 80
+  container_ssl_enabled = false
+  container_port        = 80
+  container_cpu         = 256
+  container_memory      = 512
 
   // DNS specifc settings for the ALB, disalbed
   enable_dns = false
@@ -63,14 +68,14 @@ module "service" {
         "options": {
           "awslogs-group": "${var.environment}",
           "awslogs-region": "${var.aws_region}",
-          "awslogs-stream-prefix": "service-default"
+          "awslogs-stream-prefix": "service-loadbalanced"
         }
       }
 
 EOF
 
   launch_type                    = "FARGATE"
-  awsvpc_service_security_groups = ["${aws_security_group.awsvpc_sg.id}"]
+  awsvpc_service_security_groups = ["${aws_security_group.awsvpc_loadbalanced_sg.id}"]
   awsvpc_service_subnetids       = module.vpc.private_subnets
 }
 

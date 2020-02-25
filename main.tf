@@ -97,5 +97,13 @@ resource "aws_ecs_service" "service" {
   task_definition = aws_ecs_task_definition.task.arn
   desired_count   = var.desired_count
   launch_type     = var.launch_type
+
+  dynamic "network_configuration" {
+    for_each = var.launch_type == "FARGATE" ? list(var.launch_type) : []
+    content {
+      security_groups = var.awsvpc_service_security_groups
+      subnets         = var.awsvpc_service_subnetids
+    }
+  }
 }
 

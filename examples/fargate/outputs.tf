@@ -1,3 +1,3 @@
-output "url-default" {
-  value = "http://${lower(module.service.alb_dns_name)}"
+output "url-loadbalanced" {
+  value = "http://${lower(module.service_loadbalanced.alb_dns_name)}"
 }
