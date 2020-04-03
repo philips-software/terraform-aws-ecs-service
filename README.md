@@ -74,6 +74,7 @@ Please see the examples:
 | target\_group\_arn | Required for `enable_target_group_connection` provides the target group arn to be connected to the ecs load balancer. Ensure you provide the arns of the listeners or listeners rule conntected to the target group as `ecs_services_dependencies`. | string | `""` | no |
 | task\_role\_arn | The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services. | string | `""` | no |
 | volumes | Defines the volumes that can be mounted to a container. | list(map(string)) | `<list>` | no |
+| efs_volumes | Defines the EFS volumes that can be mounted to a container. | list(map(string)) | `<list>` | no |
 | vpc\_id | The VPC to launch the ALB in in (e.g. vpc-66ecaa02). | string | `""` | no |
 
 ## Outputs
