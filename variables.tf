@@ -151,6 +151,12 @@ variable "container_port" {
   type        = string
 }
 
+variable "container_protocol" {
+  description = "The protocol of the container. Default is TPC."
+  type        = string
+  default     = "tcp"
+}
+
 variable "enable_dns" {
   description = "Enable creation of DNS record."
   type        = bool

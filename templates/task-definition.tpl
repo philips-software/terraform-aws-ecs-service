@@ -6,7 +6,10 @@
     "memory": ${container_memory},
     ${container_cpu}
     "portMappings": [
-      { "ContainerPort": ${container_port} }
+      {
+        "containerPort": ${container_port},
+        "protocol": "${container_protocol}"
+      }
     ],
     "environment": [
       ${environment_vars}
