@@ -151,6 +151,11 @@ variable "container_portmappings" {
   type        = map
 }
 
+variable "container_port" {
+  description = "The container port to be exported to the host."
+  type        = string
+}
+
 variable "enable_dns" {
   description = "Enable creation of DNS record."
   type        = bool

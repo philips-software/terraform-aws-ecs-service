@@ -7,10 +7,10 @@ data "template_file" "docker-template" {
   template = file("${path.module}/templates/task-definition.tpl")
 
   vars = {
-    docker_repository      = var.docker_repository
-    docker_image_tag       = var.docker_image_tag
-    docker_image           = var.docker_image
-    container_port         = var.container_port
+    docker_repository = var.docker_repository
+    docker_image_tag  = var.docker_image_tag
+    docker_image      = var.docker_image
+    # container_port         = var.container_port
     service_name           = var.service_name
     container_memory       = var.container_memory
     desired_count          = var.desired_count
