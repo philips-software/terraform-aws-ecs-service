@@ -148,7 +148,7 @@ variable "container_ssl_enabled" {
 
 variable "container_portmappings" {
   description = "The container ports with protocol to be exported to the host."
-  type        = map
+  type        = list
 }
 
 variable "container_port" {

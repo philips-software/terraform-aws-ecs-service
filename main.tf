@@ -18,7 +18,7 @@ data "template_file" "docker-template" {
     environment_vars       = var.docker_environment_vars
     logging_config         = var.docker_logging_config == "" ? "" : ",${var.docker_logging_config}"
     mount_points           = var.docker_mount_points == "" ? "" : ",${var.docker_mount_points}"
-    container_portmappings = jsonencode([for k, v in var.container_portmappings : { containerPort = tonumber(k), protocol = v }])
+    container_portmappings = jsonencode([for m in var.container_portmappings : { containerPort = tonumber(split("/", m)[0]), protocol = length(split("/", m)) > 1 ? split("/", m)[1] : "tcp" }])
   }
 }
 
