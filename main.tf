@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "task" {
   container_definitions = data.template_file.docker-template.rendered
   task_role_arn         = var.task_role_arn
 
-  network_mode = var.launch_type == "FARGATE" ? "awsvpc" : "bridge"
+  network_mode = var.launch_type == "FARGATE" ? "awsvpc" : var.container_networkmode
 }
 
 locals {

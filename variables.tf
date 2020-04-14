@@ -156,6 +156,12 @@ variable "container_port" {
   type        = string
 }
 
+variable "container_networkmode" {
+  description = "The network mode this container should run in. Default is bridge."
+  type        = string
+  default     = "bridge"
+}
+
 variable "enable_dns" {
   description = "Enable creation of DNS record."
   type        = bool
