@@ -146,15 +146,9 @@ variable "container_ssl_enabled" {
   default     = false
 }
 
-variable "container_port" {
-  description = "The container port to be exported to the host."
-  type        = string
-}
-
-variable "container_protocol" {
-  description = "The protocol of the container. Default is TPC."
-  type        = string
-  default     = "tcp"
+variable "container_portmappings" {
+  description = "The container ports with protocol to be exported to the host."
+  type        = map
 }
 
 variable "enable_dns" {
