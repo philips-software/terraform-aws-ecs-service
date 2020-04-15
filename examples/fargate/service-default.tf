@@ -45,7 +45,7 @@ module "service" {
   docker_image     = "nginx"
   service_name     = "service-default"
 
-  container_port   = 80
+  container_ports  = ["80"]
   container_cpu    = 256
   container_memory = 512
 

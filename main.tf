@@ -1,7 +1,3 @@
-terraform {
-  required_version = ">= 0.8.0"
-}
-
 /* Template file that renders the container definition */
 data "template_file" "docker-template" {
   template = file("${path.module}/templates/task-definition.tpl")
@@ -39,7 +35,7 @@ resource "aws_ecs_task_definition" "task" {
   container_definitions = data.template_file.docker-template.rendered
   task_role_arn         = var.task_role_arn
 
-  network_mode = var.launch_type == "FARGATE" ? "awsvpc" : var.container_networkmode
+  network_mode = var.launch_type == "FARGATE" ? "awsvpc" : var.networkmode
 }
 
 locals {

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+- Add support for multiple ports
+- Add support for defining protocols
+- Add support for other network modes
+- Rename `container_port` to `alb_container_port`
+
 ## 2.1.0 - 2020-04-08
 
 - Add support for Fargate

@@ -13,7 +13,8 @@ module "service_custom_tg" {
 
   vpc_id                         = module.vpc.vpc_id
   container_ssl_enabled          = false
-  container_port                 = "80"
+  container_ports                = ["80"]
+  alb_container_port             = 80
   enable_target_group_connection = true
 
   target_group_arn          = aws_alb_target_group.target_group.arn

@@ -49,8 +49,9 @@ module "service_loadbalanced" {
   enable_alb            = true
   alb_protocol          = "HTTP"
   alb_port              = 80
+  alb_container_port    = 80
   container_ssl_enabled = false
-  container_port        = 80
+  container_ports       = ["80"]
   container_cpu         = 256
   container_memory      = 512
 
