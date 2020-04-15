@@ -7,10 +7,9 @@ data "template_file" "docker-template" {
   template = file("${path.module}/templates/task-definition.tpl")
 
   vars = {
-    docker_repository = var.docker_repository
-    docker_image_tag  = var.docker_image_tag
-    docker_image      = var.docker_image
-    # container_port         = var.container_port
+    docker_repository      = var.docker_repository
+    docker_image_tag       = var.docker_image_tag
+    docker_image           = var.docker_image
     service_name           = var.service_name
     container_memory       = var.container_memory
     desired_count          = var.desired_count
@@ -18,7 +17,7 @@ data "template_file" "docker-template" {
     environment_vars       = var.docker_environment_vars
     logging_config         = var.docker_logging_config == "" ? "" : ",${var.docker_logging_config}"
     mount_points           = var.docker_mount_points == "" ? "" : ",${var.docker_mount_points}"
-    container_portmappings = jsonencode([for m in var.container_portmappings : { containerPort = tonumber(split("/", m)[0]), protocol = length(split("/", m)) > 1 ? split("/", m)[1] : "tcp" }])
+    container_portmappings = jsonencode([for m in var.container_ports : { containerPort = tonumber(split("/", m)[0]), protocol = length(split("/", m)) > 1 ? split("/", m)[1] : "tcp" }])
   }
 }
 
@@ -74,7 +73,7 @@ resource "aws_ecs_service" "service_alb" {
   load_balancer {
     target_group_arn = local.target_group_arn
     container_name   = var.service_name
-    container_port   = var.container_port
+    container_port   = var.alb_container_port
   }
 
   iam_role    = var.launch_type != "FARGATE" ? var.ecs_service_role : null
