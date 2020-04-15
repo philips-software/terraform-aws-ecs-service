@@ -159,8 +159,8 @@ variable "container_ssl_enabled" {
 
 variable "alb_container_port" {
   description = "The container port to associate with the load balancer."
-  type        = string
-  default     = ""
+  type        = number
+  default     = 0
 }
 
 variable "enable_dns" {
