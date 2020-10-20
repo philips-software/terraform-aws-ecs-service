@@ -16,6 +16,8 @@ data "template_file" "docker-template" {
     desired_count     = var.desired_count
     container_cpu     = var.container_cpu == "" ? "" : "\"cpu\": ${var.container_cpu},"
     environment_vars  = var.docker_environment_vars
+    docker_memoryReservation = var.docker_memoryReservation
+    docker_ulimits    = var.docker_ulimits
     logging_config    = var.docker_logging_config == "" ? "" : ",${var.docker_logging_config}"
     mount_points      = var.docker_mount_points == "" ? "" : ",${var.docker_mount_points}"
   }

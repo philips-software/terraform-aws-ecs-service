@@ -54,6 +54,20 @@ variable "docker_environment_vars" {
   default     = ""
 }
 
+variable "docker_memoryReservation" {
+  description = "The soft limit (in MiB) of memory to reserve for the container"
+  type        = number
+  default     = 0
+
+}
+
+variable "docker_ulimits" {
+  description = "A list of ulimits to set in the container"
+  type        = string
+  default     = ""
+}
+
+
 variable "service_name" {
   description = "Name of the service to be created."
   type        = string
@@ -149,6 +163,12 @@ variable "container_ssl_enabled" {
 variable "container_port" {
   description = "The container port to be exported to the host."
   type        = string
+}
+
+variable "tg_deregistration_delay" {
+  description = "l) The amount time for Elastic Load Balancing to wait before changing the state of a deregistering target from draining to unused. The range is 0-3600 seconds."
+  type        = number
+  default     = "300"
 }
 
 variable "enable_dns" {

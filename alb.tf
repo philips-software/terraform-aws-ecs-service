@@ -82,6 +82,7 @@ resource "aws_alb_target_group" "target_group" {
   port     = var.container_port
   protocol = var.container_ssl_enabled ? "HTTPS" : "HTTP"
   vpc_id   = var.vpc_id
+  deregistration_delay = var.tg_deregistration_delay
 
   target_type = var.launch_type == "FARGATE" ? "ip" : "instance"
 
