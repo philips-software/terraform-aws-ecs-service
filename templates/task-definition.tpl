@@ -5,9 +5,7 @@
     "image": "${docker_repository}/${docker_image}:${docker_image_tag}",
     "memory": ${container_memory},
     ${container_cpu}
-    "portMappings": [
-      { "ContainerPort": ${container_port} }
-    ],
+    "portMappings": ${container_portmappings},
     "environment": [
       ${environment_vars}
     ]

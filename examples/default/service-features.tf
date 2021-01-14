@@ -39,8 +39,9 @@ module "service-features" {
   enable_alb            = true
   alb_protocol          = "HTTP"
   alb_port              = 80
+  alb_container_port    = 80
   container_ssl_enabled = false
-  container_port        = 80
+  container_ports       = ["80"]
 
   // DNS specifc settings for the ALB, disalbed
   enable_dns = false

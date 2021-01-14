@@ -79,7 +79,7 @@ resource "aws_alb" "alb" {
 resource "aws_alb_target_group" "target_group" {
   count = var.enable_alb || var.enable_load_balanced ? 1 : 0
 
-  port     = var.container_port
+  port     = var.alb_container_port
   protocol = var.container_ssl_enabled ? "HTTPS" : "HTTP"
   vpc_id   = var.vpc_id
 

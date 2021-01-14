@@ -16,7 +16,8 @@ module "service_custom_path" {
   ecs_service_role = module.ecs_cluster.service_role_name
 
   vpc_id               = module.vpc.vpc_id
-  container_port       = "8080"
+  container_ports      = ["8080"]
+  alb_container_port   = 8080
   enable_load_balanced = true
   listener_arn         = module.lb_service_custom_path.listener_arn
 

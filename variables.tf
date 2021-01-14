@@ -42,6 +42,17 @@ variable "container_cpu" {
   default     = ""
 }
 
+variable "container_ports" {
+  description = "The container ports to be exposed. Optionally can include protocol (e.g. `8080`, `8080/tcp`, `8080/udp`)."
+  type        = list
+}
+
+variable "networkmode" {
+  description = "The network mode this container should run in. Default is bridge."
+  type        = string
+  default     = "bridge"
+}
+
 variable "launch_type" {
   description = "Sets launch type for service. Options are: EC2, FARGATE. Default is EC2."
   type        = string
@@ -146,9 +157,10 @@ variable "container_ssl_enabled" {
   default     = false
 }
 
-variable "container_port" {
-  description = "The container port to be exported to the host."
-  type        = string
+variable "alb_container_port" {
+  description = "The container port to associate with the load balancer."
+  type        = number
+  default     = 0
 }
 
 variable "enable_dns" {

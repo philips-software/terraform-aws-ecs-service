@@ -18,7 +18,8 @@ module "service_ssl_lb_route53" {
 
   vpc_id                = module.vpc.vpc_id
   container_ssl_enabled = false
-  container_port        = "80"
+  container_ports       = ["80"]
+  alb_container_port    = 80
   enable_load_balanced  = true
   listener_arn          = module.lb_service_ssl_lb_route53.listener_arn
 
@@ -36,7 +37,7 @@ module "service_ssl_lb_route53" {
           "awslogs-stream-prefix": "${var.service_name}"
         }
       }
-    
+
 EOF
 
 }
